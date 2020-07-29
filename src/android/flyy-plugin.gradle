@@ -1,0 +1,10 @@
+repositories {
+    maven { 
+    	url "https://jitpack.io"
+    	credentials { username 'jp_9lured1djkqj83p7vaqhes4img' } 
+    }
+}
+
+dependencies {
+    implementation 'com.github.roid-software:flyy-sdk:a0d4e2c907'
+}

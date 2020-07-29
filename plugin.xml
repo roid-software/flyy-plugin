@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-theflyy" version="0.1.0">
+   <name>FlyyPlugin</name>
+   <js-module name="FlyyPlugin" src="www/FlyyPlugin.js">
+      <clobbers target="cordova.plugins.FlyyPlugin" />
+   </js-module>
+   <platform name="android">
+      <config-file parent="/*" target="res/xml/config.xml">
+         <feature name="FlyyPlugin">
+            <param name="android-package" value="cordova.plugin.theflyy.FlyyPlugin" />
+         </feature>
+
+         <feature name="MyWorkManagerInitializer">
+            <param name="android-package" value="cordova.plugin.theflyy.MyWorkManagerInitializer" />
+         </feature>
+      </config-file>
+      <config-file parent="/*" target="AndroidManifest.xml" />
+      <source-file src="src/android/FlyyPlugin.java" target-dir="src/cordova-plugin-theflyy/FlyyPlugin" />
+      <source-file src="src/android/MyWorkManagerInitializer.java" target-dir="src/cordova-plugin-theflyy/MyWorkManagerInitializer" />
+      <framework src="src/android/flyy-plugin.gradle" custom="true" type="gradleReference" />
+   </platform>
+</plugin>
