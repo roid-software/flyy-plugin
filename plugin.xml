@@ -16,7 +16,6 @@
       </config-file>
       <config-file parent="/*" target="AndroidManifest.xml" />
       <source-file src="src/android/FlyyPlugin.java" target-dir="src/cordova-plugin-theflyy/FlyyPlugin" />
-      <source-file src="src/android/MyWorkManagerInitializer.java" target-dir="src/cordova-plugin-theflyy/MyWorkManagerInitializer" />
       <framework src="src/android/flyy-plugin.gradle" custom="true" type="gradleReference" />
    </platform>
 </plugin>
