@@ -37,25 +37,25 @@ public class FlyyPlugin extends CordovaPlugin {
             }
             return true;
         } else if (action.equals("openOfferActivity")){
-            Flyy.navigateToOffersActivity(context)
+            Flyy.navigateToOffersActivity(context);
 
             callbackContext.success("true");
 
             return true;
         }  else if (action.equals("openRewardsActivity")){
-            Flyy.navigateToRewardsActivity(context)
+            Flyy.navigateToRewardsActivity(context);
 
             callbackContext.success("true");
 
             return true;
         }   else if (action.equals("openWalletActivity")){
-            Flyy.navigateToWalletActivity(context)
+            Flyy.navigateToWalletActivity(context);
 
             callbackContext.success("true");
 
             return true;
         }   else if (action.equals("openGiftCardsActivity")){
-            Flyy.navigateToGiftCardsActivity(context)
+            Flyy.navigateToGiftCardsActivity(context);
 
             callbackContext.success("true");
 
