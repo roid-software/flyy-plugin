@@ -43,18 +43,10 @@ exports.trackEventJson = function (key, jsonObj, success, error) {
 exports.checkAppInfo = function (success, error) {
     exec(success, error, 'FlyyPlugin', 'checkAppInfo', []);
 };
-exports.sendEventFromWorker = function (key, value,success, error) {
-    exec(success, error, 'FlyyPlugin', 'sendEventFromWorker', [key,value]);
-};
 exports.sendNotificationDataToBackend = function (messageId, offer_id,action,source,success, error) {
     exec(success, error, 'FlyyPlugin', 'sendNotificationDataToBackend', [messageId,offer_id,action,source]);
 };
-exports.setUserData = function (key, value,success, error) {
-    exec(success, error, 'FlyyPlugin', 'setUserData', [key,value]);
-};
-exports.getDeviceId = function (success, error) {
-    exec(success, error, 'FlyyPlugin', 'getDeviceId', []);
-};
+
 exports.setContactNumber = function (key,success, error) {
     exec(success, error, 'FlyyPlugin', 'setContactNumber', [key]);
 };
@@ -72,9 +64,6 @@ exports.setRewardGridSpanCount = function (gridSpanCount,success, error) {
 };
 exports.openDeeplink = function (action,success, error) {
     exec(success, error, 'FlyyPlugin', 'openDeeplink', [action]);
-};
-exports.sendPopupShownToBackend = function (notification_id,campaign_id,success, error) {
-    exec(success, error, 'FlyyPlugin', 'sendPopupShownToBackend', [notification_id,campaign_id]);
 };
 exports.showToast = function (msg,success, error) {
     exec(success, error, 'FlyyPlugin', 'showToast', [msg]);

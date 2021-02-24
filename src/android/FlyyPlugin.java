@@ -130,9 +130,9 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         } else if (action.equals("sendNotificationReceived")) {
             
-            String notification_id = args.getString(0);
-            String offer_id = args.getString(1);
-            if (notification_id!=null && notification_id.length() > 0 && offer_id !=null && offer_id.length() > 0) {
+            int notification_id = args.getInt(0);
+            int offer_id = args.getInt(1);
+            if (notification_id >=0 && offer_id) {
                 Flyy.sendNotificationReceived(notification_id, offer_id);
                 callbackContext.success("true");
             } else {
@@ -145,7 +145,7 @@ public class FlyyPlugin extends CordovaPlugin {
             int notification_id = args.getInt(0);
             int offer_id = args.getInt(1);
             String source = args.getString(2);
-            if (notification_id >= 0 && offer_id >= 0 && source !=null && source.length>0) {
+            if (notification_id >= 0 && offer_id >= 0 && source !=null && source.length()>0) {
                 Flyy.sendNotificationClicked(notification_id, offer_id, source);
                 callbackContext.success("true");
             } else {
@@ -157,50 +157,20 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.checkAppInfo();
             callbackContext.success("true");
             return true;
-        }else if (action.equals("sendEventFromWorker")) {
-            String key = args.getString(0);
-            String value = args.getString(1);
-            if (key !=null && key.length() > 0 && value !=null && value.length() > 0) {
-            Flyy.sendEventFromWorker(key,value);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected two non-empty integer and one non-empty string argument.");
-            }
-
-            return true;
         }else if (action.equals("sendNotificationDataToBackend")) {
             int messageId = args.getInt(0);
             int offer_id  = args.getInt(1);
-            String action  = args.getString(2);
-            String source  = args.getString(3);
-            if (messageId >= 0 && offer_id && 0 && action !=null && action.length() >0 && source !=null && source.length()>0) {
+            String source  = args.getString(2);
+            if (messageId >= 0 && offer_id >= 0 && source !=null && source.length()>0) {
             Flyy.sendNotificationDataToBackend(messageId,offer_id,action,source);
             callbackContext.success("true");
             }else{
                 callbackContext.error("Expected two non-empty integer and one non-empty string argument.");
             }
             return true;
-        }else if (action.equals("setUserData")) {
-            String key = args.getString(0);
-            String value  = args.getString(1);
-    
-            if (key !=null && key.length() && value != null && value.length()>0) {
-            Flyy.sendNotificationDataToBackend(key,value);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected two non-empty integer and one non-empty string argument.");
-            }
-
-            return true;
-        }else if (action.equals("getDeviceId")) {
-
-            Flyy.getDeviceId();
-            callbackContext.success("true");
-
-            return true;
         }else if (action.equals("setContactNumber")) {
             String key = args.getString(0);
-            if (key !=null && key.length()) {
+            if (key !=null && key.length()>0) {
             Flyy.setContactNumber(key);
             callbackContext.success("true");
             }else{
@@ -210,7 +180,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("startStampActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length()) {
+            if (segmentId !=null && segmentId.length()>0) {
             Flyy.navigateToStampActivity(context,segmentId);
             callbackContext.success("true");
             }else{
@@ -220,7 +190,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("startReferralHistoryActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length()) {
+            if (segmentId !=null && segmentId.length()>0) {
             Flyy.navigateToReferralHistoryActivity(context,segmentId);
             callbackContext.success("true");
             }else{
@@ -272,8 +242,6 @@ public class FlyyPlugin extends CordovaPlugin {
             
             return true;
         }else if (action.equals("openDeeplink")) {
-            String action = args.getString(0);
-
             if (action !=null && action.length()>0) {
             FlyyUtility.openDeeplink(context,action);
             callbackContext.success("true");
@@ -293,18 +261,6 @@ public class FlyyPlugin extends CordovaPlugin {
             }
             
             return true;
-        }else if (action.equals("sendPopupShownToBackend")) {
-            int notification_id = args.getInt(0);
-            int campaign_id = args.getInt(1);
-
-            if (notification_id >=0 && campaign_id>=0) {
-            FlyyUtility.sendPopupShownToBackend(context,notification_id,campaign_id);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
         }else if (action.equals("showToast")) {
             String msg = args.getString(0);
 
@@ -318,13 +274,8 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("saveShowWallet")) {
             boolean showWallet = args.getBoolean(0);
-
-            if (showWallet !=null) {
             FlyyUtility.saveShowWallet(context,showWallet);
             callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty boolean argument.");
-            }
             
             return true;
         }else if (action.equals("openAppShare")) {
