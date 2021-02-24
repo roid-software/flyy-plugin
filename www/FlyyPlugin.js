@@ -37,7 +37,7 @@ exports.trackEvent = function (key, value, success, error) {
 };
 
 exports.trackEventJson = function (key, jsonObj, success, error) {
-    exec(success, error, 'FlyyPlugin', 'trackEvent', [key, JSON.stringify(jsonObj)]);
+    exec(success, error, 'FlyyPlugin', 'trackEventJson', [key, JSON.stringify(jsonObj)]);
 };
 
 exports.checkAppInfo = function (success, error) {
@@ -51,4 +51,40 @@ exports.sendNotificationDataToBackend = function (messageId, offer_id,action,sou
 };
 exports.setUserData = function (key, value,success, error) {
     exec(success, error, 'FlyyPlugin', 'setUserData', [key,value]);
+};
+exports.getDeviceId = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'getDeviceId', []);
+};
+exports.setContactNumber = function (key,success, error) {
+    exec(success, error, 'FlyyPlugin', 'setContactNumber', [key]);
+};
+exports.startStampActivity = function (segmentId,success, error) {
+    exec(success, error, 'FlyyPlugin', 'startStampActivity', [segmentId]);
+};
+exports.startReferralHistoryActivity = function (segmentId,success, error) {
+    exec(success, error, 'FlyyPlugin', 'startReferralHistoryActivity', [segmentId]);
+};
+exports.startTournamentListActivity = function (title,segmentId,success, error) {
+    exec(success, error, 'FlyyPlugin', 'startTournamentListActivity', [title,segmentId]);
+};
+exports.setRewardGridSpanCount = function (gridSpanCount,success, error) {
+    exec(success, error, 'FlyyPlugin', 'setRewardGridSpanCount', [gridSpanCount]);
+};
+exports.openDeeplink = function (action,success, error) {
+    exec(success, error, 'FlyyPlugin', 'openDeeplink', [action]);
+};
+exports.sendPopupShownToBackend = function (notification_id,campaign_id,success, error) {
+    exec(success, error, 'FlyyPlugin', 'sendPopupShownToBackend', [notification_id,campaign_id]);
+};
+exports.showToast = function (msg,success, error) {
+    exec(success, error, 'FlyyPlugin', 'showToast', [msg]);
+};
+exports.saveShowWallet = function (showWallet,success, error) {
+    exec(success, error, 'FlyyPlugin', 'saveShowWallet', [showWallet]);
+};
+exports.openAppShare = function (packageName,urlToShare,success, error) {
+    exec(success, error, 'FlyyPlugin', 'openAppShare', [packageName,urlToShare]);
+};
+exports.remindUser = function (user_id,event_id,offer_id,success, error) {
+    exec(success, error, 'FlyyPlugin', 'remindUser', [user_id,event_id,offer_id]);
 };
