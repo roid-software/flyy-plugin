@@ -132,7 +132,7 @@ public class FlyyPlugin extends CordovaPlugin {
             
             String notification_id = args.getString(0);
             String offer_id = args.getString(1);
-            if (notification_id!=null && notification_id.length > 0 && offer_id !=null && offer_id.length > 0) {
+            if (notification_id!=null && notification_id.length() > 0 && offer_id !=null && offer_id.length() > 0) {
                 Flyy.sendNotificationReceived(notification_id, offer_id);
                 callbackContext.success("true");
             } else {
@@ -160,7 +160,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("sendEventFromWorker")) {
             String key = args.getString(0);
             String value = args.getString(1);
-            if (key !=null && key.length > 0 && value !=null && value.length > 0) {
+            if (key !=null && key.length() > 0 && value !=null && value.length() > 0) {
             Flyy.sendEventFromWorker(key,value);
             callbackContext.success("true");
             }else{
@@ -173,7 +173,7 @@ public class FlyyPlugin extends CordovaPlugin {
             int offer_id  = args.getInt(1);
             String action  = args.getString(2);
             String source  = args.getString(3);
-            if (messageId >= 0 && offer_id && 0 && action !=null && action.length >0 && source !=null && source.length>0) {
+            if (messageId >= 0 && offer_id && 0 && action !=null && action.length() >0 && source !=null && source.length()>0) {
             Flyy.sendNotificationDataToBackend(messageId,offer_id,action,source);
             callbackContext.success("true");
             }else{
@@ -184,7 +184,7 @@ public class FlyyPlugin extends CordovaPlugin {
             String key = args.getString(0);
             String value  = args.getString(1);
     
-            if (key !=null && key.length && value != null && value.length>0) {
+            if (key !=null && key.length() && value != null && value.length()>0) {
             Flyy.sendNotificationDataToBackend(key,value);
             callbackContext.success("true");
             }else{
@@ -200,7 +200,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("setContactNumber")) {
             String key = args.getString(0);
-            if (key !=null && key.length) {
+            if (key !=null && key.length()) {
             Flyy.setContactNumber(key);
             callbackContext.success("true");
             }else{
@@ -210,7 +210,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("startStampActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length) {
+            if (segmentId !=null && segmentId.length()) {
             Flyy.navigateToStampActivity(context,segmentId);
             callbackContext.success("true");
             }else{
@@ -220,7 +220,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("startReferralHistoryActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length) {
+            if (segmentId !=null && segmentId.length()) {
             Flyy.navigateToReferralHistoryActivity(context,segmentId);
             callbackContext.success("true");
             }else{
@@ -230,7 +230,7 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("startReferralHistoryActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length>0  ) {
+            if (segmentId !=null && segmentId.length()>0  ) {
             Flyy.navigateToReferralHistoryActivity(context,segmentId);
             callbackContext.success("true");
             }else{
@@ -241,7 +241,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("startTournamentListActivity")) {
             String title = args.getString(0);
             String segmentId = args.getString(1);
-            if (title !=null && title.length>0 && segmentId !=null && segmentId.length>0) {
+            if (title !=null && title.length()>0 && segmentId !=null && segmentId.length()>0) {
             Flyy.navigateToTournamentListActivity(context,title,segmentId);
             callbackContext.success("true");
             }else{
@@ -252,7 +252,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("startTournamentListActivity")) {
             String title = args.getString(0);
             String segmentId = args.getString(1);
-            if (title !=null && title.length>0 && segmentId !=null && segmentId.length>0) {
+            if (title !=null && title.length()>0 && segmentId !=null && segmentId.length()>0) {
             Flyy.navigateToTournamentListActivity(context,title,segmentId);
             callbackContext.success("true");
             }else{
@@ -274,7 +274,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("openDeeplink")) {
             String action = args.getString(0);
 
-            if (action !=null && action.length>0) {
+            if (action !=null && action.length()>0) {
             FlyyUtility.openDeeplink(context,action);
             callbackContext.success("true");
             }else{
@@ -285,7 +285,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("saveUserData")) {
             String user_name = args.getString(0);
 
-            if (user_name !=null && user_name.length>0) {
+            if (user_name !=null && user_name.length()>0) {
             FlyyUtility.saveUserData(context,user_name);
             callbackContext.success("true");
             }else{
@@ -308,7 +308,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("showToast")) {
             String msg = args.getString(0);
 
-            if (msg !=null && msg.length>0) {
+            if (msg !=null && msg.length()>0) {
             FlyyUtility.showToast(context,msg);
             callbackContext.success("true");
             }else{
@@ -331,7 +331,7 @@ public class FlyyPlugin extends CordovaPlugin {
             String packageName = args.getString(0);
             String urlToShare = args.getString(1);
 
-            if (packageName !=null && packageName.length>0 && urlToShare!=null && urlToShare.length>0 ) {
+            if (packageName !=null && packageName.length()>0 && urlToShare!=null && urlToShare.length()>0 ) {
             FlyyUtility.openAppShare(context,packageName,urlToShare);
             callbackContext.success("true");
             }else{
@@ -356,7 +356,7 @@ public class FlyyPlugin extends CordovaPlugin {
             String key = args.getString(0);
             JSONObject value = args.getJSONObject(1);
 
-            if (key !=null && key.length>0 && value !=null ) {
+            if (key !=null && key.length()>0 && value !=null ) {
             Flyy.sendEvent(key,value);
             callbackContext.success("true");
             }else{
