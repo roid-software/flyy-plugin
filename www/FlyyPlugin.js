@@ -71,9 +71,6 @@ exports.showToast = function (msg,success, error) {
 exports.saveShowWallet = function (showWallet,success, error) {
     exec(success, error, 'FlyyPlugin', 'saveShowWallet', [showWallet]);
 };
-exports.openAppShare = function (packageName,urlToShare,success, error) {
-    exec(success, error, 'FlyyPlugin', 'openAppShare', [packageName,urlToShare]);
-};
 exports.remindUser = function (user_id,event_id,offer_id,success, error) {
     exec(success, error, 'FlyyPlugin', 'remindUser', [user_id,event_id,offer_id]);
 };

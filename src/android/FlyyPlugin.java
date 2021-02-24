@@ -132,7 +132,7 @@ public class FlyyPlugin extends CordovaPlugin {
             
             int notification_id = args.getInt(0);
             int offer_id = args.getInt(1);
-            if (notification_id >=0 && offer_id) {
+            if (notification_id >=0 && offer_id>=0) {
                 Flyy.sendNotificationReceived(notification_id, offer_id);
                 callbackContext.success("true");
             } else {
@@ -276,18 +276,6 @@ public class FlyyPlugin extends CordovaPlugin {
             boolean showWallet = args.getBoolean(0);
             FlyyUtility.saveShowWallet(context,showWallet);
             callbackContext.success("true");
-            
-            return true;
-        }else if (action.equals("openAppShare")) {
-            String packageName = args.getString(0);
-            String urlToShare = args.getString(1);
-
-            if (packageName !=null && packageName.length()>0 && urlToShare!=null && urlToShare.length()>0 ) {
-            FlyyUtility.openAppShare(context,packageName,urlToShare);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
             
             return true;
         }else if (action.equals("remindUser")) {
