@@ -86,8 +86,9 @@ public class FlyyPlugin extends CordovaPlugin {
         } else if (action.equals("setUser")) {
 
             String ext_uid = args.getString(0);
-            if (ext_uid != null && ext_uid.length() > 0) {
-                Flyy.setUser(ext_uid);
+            String segmentId = args.getString(1);
+            if (ext_uid != null && ext_uid.length() > 0 && segmentId != null && segmentId.length() > 0) {
+                Flyy.setUser(ext_uid,segmentId);
                 callbackContext.success("true");
             } else {
                 callbackContext.error("Expected one non-empty string argument.");

@@ -20,8 +20,8 @@ exports.startGiftCardsActivity = function (segmentId,success, error) {
     exec(success, error, 'FlyyPlugin', 'openGiftCardsActivity', [segmentId]);
 };
 
-exports.setUser = function (ext_uid, success, error) {
-    exec(success, error, 'FlyyPlugin', 'setUser', [ext_uid]);
+exports.setUser = function (ext_uid,segmentId, success, error) {
+    exec(success, error, 'FlyyPlugin', 'setUser', [ext_uid,segmentId]);
 };
 
 exports.setNewUser = function (ext_uid, success, error) {
