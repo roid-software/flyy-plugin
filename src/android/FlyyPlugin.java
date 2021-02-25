@@ -64,9 +64,8 @@ public class FlyyPlugin extends CordovaPlugin {
             String segmentId = args.getString(0);
 
             if (segmentId != null && segmentId.length() > 0) {
-            Flyy.navigateToWalletActivity(context);
-
-            callbackContext.success("true");
+             Flyy.navigateToWalletActivity(context,segmentId);
+             callbackContext.success("true");
             }else{
                 callbackContext.error("Expected one non-empty string argument.");  
             }
