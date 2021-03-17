@@ -153,21 +153,6 @@ public class FlyyPlugin extends CordovaPlugin {
             }
 
             return true;
-        }else if (action.equals("checkAppInfo")) {
-            Flyy.checkAppInfo();
-            callbackContext.success("true");
-            return true;
-        }else if (action.equals("sendNotificationDataToBackend")) {
-            int messageId = args.getInt(0);
-            int offer_id  = args.getInt(1);
-            String source  = args.getString(2);
-            if (messageId >= 0 && offer_id >= 0 && source !=null && source.length()>0) {
-            Flyy.sendNotificationDataToBackend(messageId,offer_id,action,source);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected two non-empty integer and one non-empty string argument.");
-            }
-            return true;
         }else if (action.equals("setContactNumber")) {
             String key = args.getString(0);
             if (key !=null && key.length()>0) {
@@ -192,27 +177,6 @@ public class FlyyPlugin extends CordovaPlugin {
             String segmentId = args.getString(0);
             if (segmentId !=null && segmentId.length()>0) {
             Flyy.navigateToReferralHistoryActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("startReferralHistoryActivity")) {
-            String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length()>0  ) {
-            Flyy.navigateToReferralHistoryActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("startTournamentListActivity")) {
-            String title = args.getString(0);
-            String segmentId = args.getString(1);
-            if (title !=null && title.length()>0 && segmentId !=null && segmentId.length()>0) {
-            Flyy.navigateToTournamentListActivity(context,title,segmentId);
             callbackContext.success("true");
             }else{
                 callbackContext.error("Expected one non-empty string argument.");
@@ -244,59 +208,6 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("openDeeplink")) {
             if (action !=null && action.length()>0) {
             FlyyUtility.openDeeplink(context,action);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("saveUserData")) {
-            String user_name = args.getString(0);
-
-            if (user_name !=null && user_name.length()>0) {
-            FlyyUtility.saveUserData(context,user_name);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("showToast")) {
-            String msg = args.getString(0);
-
-            if (msg !=null && msg.length()>0) {
-            FlyyUtility.showToast(context,msg);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("saveShowWallet")) {
-            boolean showWallet = args.getBoolean(0);
-            FlyyUtility.saveShowWallet(context,showWallet);
-            callbackContext.success("true");
-            
-            return true;
-        }else if (action.equals("remindUser")) {
-            int user_id = args.getInt(0);
-            int event_id = args.getInt(1);
-            int offer_id = args.getInt(2);
-
-            if (user_id >=0 && event_id >=0 && offer_id>=0 ) {
-            FlyyUtility.remindUser(context,user_id,event_id,offer_id);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");
-            }
-            
-            return true;
-        }else if (action.equals("trackEventJson")) {
-            String key = args.getString(0);
-            JSONObject value = args.getJSONObject(1);
-
-            if (key !=null && key.length()>0 && value !=null ) {
-            Flyy.sendEvent(key,value);
             callbackContext.success("true");
             }else{
                 callbackContext.error("Expected one non-empty string argument.");

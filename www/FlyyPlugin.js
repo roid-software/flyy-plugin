@@ -37,16 +37,8 @@ exports.trackEvent = function (key, value, success, error) {
 };
 
 exports.trackEventJson = function (key, jsonObj, success, error) {
-    exec(success, error, 'FlyyPlugin', 'trackEventJson', [key, JSON.stringify(jsonObj)]);
+    exec(success, error, 'FlyyPlugin', 'trackEvent', [key, JSON.stringify(jsonObj)]);
 };
-
-exports.checkAppInfo = function (success, error) {
-    exec(success, error, 'FlyyPlugin', 'checkAppInfo', []);
-};
-exports.sendNotificationDataToBackend = function (messageId, offer_id,action,source,success, error) {
-    exec(success, error, 'FlyyPlugin', 'sendNotificationDataToBackend', [messageId,offer_id,action,source]);
-};
-
 exports.setContactNumber = function (key,success, error) {
     exec(success, error, 'FlyyPlugin', 'setContactNumber', [key]);
 };
@@ -64,13 +56,4 @@ exports.setRewardGridSpanCount = function (gridSpanCount,success, error) {
 };
 exports.openDeeplink = function (action,success, error) {
     exec(success, error, 'FlyyPlugin', 'openDeeplink', [action]);
-};
-exports.showToast = function (msg,success, error) {
-    exec(success, error, 'FlyyPlugin', 'showToast', [msg]);
-};
-exports.saveShowWallet = function (showWallet,success, error) {
-    exec(success, error, 'FlyyPlugin', 'saveShowWallet', [showWallet]);
-};
-exports.remindUser = function (user_id,event_id,offer_id,success, error) {
-    exec(success, error, 'FlyyPlugin', 'remindUser', [user_id,event_id,offer_id]);
 };
