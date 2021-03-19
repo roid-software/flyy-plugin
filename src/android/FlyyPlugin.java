@@ -28,8 +28,8 @@ public class FlyyPlugin extends CordovaPlugin {
             String enviroment = args.getString(1);
         
             if (partner_token != null && partner_token.length() > 0 && enviroment != null && enviroment.length() > 0) {
-                if(enviroment == "stage" || enviroment == "production"){
-                    Flyy.init(  context, partner_token, enviroment == "stage" ? Flyy.STAGE : Flyy.PRODUCTION);
+                if(enviroment.equalsIgnoreCase("stage") || enviroment.equalsIgnoreCase("production")){
+                    Flyy.init(  context, partner_token, enviroment.equalsIgnoreCase("stage") ? Flyy.STAGE : Flyy.PRODUCTION);
                     callbackContext.success("true");
                 } else {
                     callbackContext.error("Expected enviroment variable as either 'stage' or 'production'.");
