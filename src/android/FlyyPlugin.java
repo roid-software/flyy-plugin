@@ -218,7 +218,7 @@ public class FlyyPlugin extends CordovaPlugin {
         }else if (action.equals("setAppPackage")) {
             String package = args.getString(0);
             if (package !=null && package.length()>0) {
-                FlyyUtility.setPackageName(package);
+                Flyy.setPackageName(package);
                 callbackContext.success("true");
             }else{
                 callbackContext.error("Expected one non-empty string argument.");
