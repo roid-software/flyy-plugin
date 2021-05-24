@@ -216,19 +216,13 @@ public class FlyyPlugin extends CordovaPlugin {
             
             return true;
         }else if (action.equals("setAppPackage")) {
-            String package = args.getString(0);
-            if (package !=null && package.length()>0) {
-                Flyy.setPackageName(package);
+            String packageName = args.getString(0);
+            if (packageName !=null && packageName.length()>0) {
+                Flyy.setPackageName(packageName);
                 callbackContext.success("true");
             }else{
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
-            return true;
-        }else if (action.equals("handleNotification")) {
-            RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
-            FlyyNotificationHandler.handleNotification(context, remoteMessage, null);
-            callbackContext.success("true");
             
             return true;
         }
