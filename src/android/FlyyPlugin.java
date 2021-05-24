@@ -12,6 +12,7 @@ import android.content.Context;
 import theflyy.com.flyy.views.FlyyOffersActivity;
 import theflyy.com.flyy.Flyy;
 import theflyy.com.flyy.helpers.FlyyUtility;
+import com.google.firebase.messaging.RemoteMessage;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -212,6 +213,22 @@ public class FlyyPlugin extends CordovaPlugin {
             }else{
                 callbackContext.error("Expected one non-empty string argument.");
             }
+            
+            return true;
+        }else if (action.equals("setAppPackage")) {
+            String package = args.getString(0);
+            if (package !=null && package.length()>0) {
+                FlyyUtility.setPackageName(package);
+                callbackContext.success("true");
+            }else{
+                callbackContext.error("Expected one non-empty string argument.");
+            }
+            
+            return true;
+        }else if (action.equals("handleNotification")) {
+            RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
+            FlyyNotificationHandler.handleNotification(context, remoteMessage, null);
+            callbackContext.success("true");
             
             return true;
         }

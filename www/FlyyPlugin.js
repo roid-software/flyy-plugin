@@ -57,3 +57,9 @@ exports.setRewardGridSpanCount = function (gridSpanCount,success, error) {
 exports.openDeeplink = function (action,success, error) {
     exec(success, error, 'FlyyPlugin', 'openDeeplink', [action]);
 };
+exports.setAppPackage = function (packageName,success, error) {
+    exec(success, error, 'FlyyPlugin', 'setAppPackage', [packageName]);
+};
+exports.handleNotification = function (remoteMessage,success, error) {
+    exec(success, error, 'FlyyPlugin', 'handleNotification', [remoteMessage]);
+};
