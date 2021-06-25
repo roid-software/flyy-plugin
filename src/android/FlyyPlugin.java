@@ -13,6 +13,7 @@ import theflyy.com.flyy.views.FlyyOffersActivity;
 import theflyy.com.flyy.Flyy;
 import theflyy.com.flyy.helpers.FlyyUtility;
 import com.google.firebase.messaging.RemoteMessage;
+import theflyy.com.flyy.helpers.FlyyNotificationHandler;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -225,6 +226,10 @@ public class FlyyPlugin extends CordovaPlugin {
             }
             
             return true;
+        } else if (action.equals("handleNotification")) {
+            RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
+            FlyyNotificationHandler.handleNotification(context, remoteMessage, null, null);
+            callbackContext.success("true");
         }
 
 
