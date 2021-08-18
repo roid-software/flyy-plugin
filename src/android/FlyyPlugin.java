@@ -14,6 +14,19 @@ import theflyy.com.flyy.Flyy;
 import theflyy.com.flyy.helpers.FlyyUtility;
 import com.google.firebase.messaging.RemoteMessage;
 import theflyy.com.flyy.helpers.FlyyNotificationHandler;
+import theflyy.com.flyy.helpers.FlyyReferralDataFetchedListener;
+import theflyy.com.flyy.model.FlyyReferralDetails;
+import theflyy.com.flyy.helpers.FlyyReferralCountFetchedListener;
+import theflyy.com.flyy.helpers.FlyyFetchScratchCardCountListener;
+import theflyy.com.flyy.model.externals.FlyyScrachCardCount;
+import theflyy.com.flyy.helpers.FlyyFetchLeaderboardDataListner;
+import theflyy.com.flyy.model.externals.FlyyLeaderboardData;
+import theflyy.com.flyy.helpers.FlyyFetchWalletDataListener;
+import theflyy.com.flyy.model.externals.FlyySpecificWalletData;
+import theflyy.com.flyy.helpers.FlyyFetchReferrerDetailsListener;
+import theflyy.com.flyy.model.externals.FlyyReferrerDetails;
+import theflyy.com.flyy.helpers.FlyyUIEventsListener;
+import theflyy.com.flyy.model.FlyyUIEvent;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -230,6 +243,150 @@ public class FlyyPlugin extends CordovaPlugin {
             RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
             FlyyNotificationHandler.handleNotification(context, remoteMessage, null, null);
             callbackContext.success("true");
+        } else if (action.equals("navigateToInviteAndEarnActivity")) {
+            String offerId = args.getString(0);
+            if (offerId != null && offerId.length() > 0) {
+                Flyy.navigateToInviteAndEarnActivity(context, offerId);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected one non-empty string argument.");
+            }
+            return true;
+        } else if (action.equals("navigateToCustomInviteAndEanActivity")) {
+            String offerId = args.getString(0);
+            String toolbarItemsColor = args.getString(1);
+            if (offerId != null && offerId.length() > 0) {
+                Flyy.navigateToCustomInviteAndEanActivity(context, offerId, toolbarItemsColor);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected at least one non-empty string argument.");
+            }
+            return true;
+        } else if (action.equals("setThemeColor")) {
+            String colorPrimary = args.getString(0);
+            String colorPrimaryDark = args.getString(1);
+            if (colorPrimary != null && colorPrimary.length() > 0 && colorPrimaryDark != null && colorPrimaryDark.length() > 0) {
+                Flyy.setThemeColor(colorPrimary, colorPrimaryDark);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected two non-empty string argument.");
+            }
+            return true;
+        } else if (action.equals("getShareData")) {
+            String offerId = args.getString(0);
+            Flyy.getShareData(context, offerId, new FlyyReferralDataFetchedListener() {
+                @Override
+                public void onReferralDetailsFetched(FlyyReferralDetails referralDetails) {
+                    callbackContext.success(referralDetails);
+                }
+
+                @Override
+                public void onFailure(String failureMessage) {
+                    callbackContext.error(failureMessage);
+                }
+            });
+            return true;
+        } else if (action.equals("getReferralCount")) {
+            Flyy.getReferralCount(context, new FlyyReferralCountFetchedListener() {
+                @Override
+                public void onReferralCountFetched(int referralsCount) {
+                    callbackContext.success(referralsCount);
+                }
+
+                @Override
+                public void onFailure(String failureMessage) {
+                    callbackContext.error(failureMessage);
+                }
+            });
+            return true;
+        } else if (action.equals("getScratchCardCount")) {
+            Flyy.getScratchCardCount(context, new FlyyFetchScratchCardCountListener() {
+                @Override
+                public void onSuccess(FlyyScrachCardCount flyyScrachCardCount) {
+                    callbackContext.success(flyyScrachCardCount);
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    callbackContext.error(message);
+                }
+            });
+            return true;
+        } else if (action.equals("getPreviousLeaderboardWinners")) {
+            String tag = args.getString(0);
+            if (tag != null && tag.length() > 0) {
+                Flyy.getPreviousLeaderboardWinners(context, tag, new FlyyFetchLeaderboardDataListner() {
+                    @Override
+                    public void onSuccess(FlyyLeaderboardData flyyLeaderboardData) {
+                        callbackContext.success(flyyLeaderboardData);
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        callbackContext.error(message);
+                    }
+                });
+            } else {
+                callbackContext.error("Please provide tag");
+            }
+            return true;
+        } else if (action.equals("getLeaderboardParticipants")) {
+            String tag = args.getString(0);
+            if (tag != null && tag.length() > 0) {
+                Flyy.getLeaderboardParticipants(context, tag, new FlyyFetchLeaderboardDataListner() {
+                    @Override
+                    public void onSuccess(FlyyLeaderboardData flyyLeaderboardData) {
+                        callbackContext.success(flyyLeaderboardData);
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        callbackContext.error(message);
+                    }
+                });
+            } else {
+                callbackContext.error("Please provide tag");
+            }
+            return true;
+        } else if (action.equals("getWalletBalance")) {
+            String wallet_label = args.getString(0);
+            if (wallet_label != null && wallet_label.length() > 0) {
+                Flyy.getWalletBalance(context, wallet_label, new FlyyFetchWalletDataListener() {
+                    @Override
+                    public void onSuccess(FlyySpecificWalletData flyySpecificWalletData) {
+                        callbackContext.success(flyySpecificWalletData);
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        callbackContext.error(message);
+                    }
+                });
+            } else {
+                callbackContext.error("Please provide wallet_label");
+            }
+            return true;
+        } else if (action.equals("getReferrerDetails")) {
+            Flyy.getReferrerDetails(context, new FlyyFetchReferrerDetailsListener() {
+                @Override
+                public void onSuccess(FlyyReferrerDetails flyyReferrerDetails) {
+                    callbackContext.success(flyyReferrerDetails);
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    callbackContext.error(message);
+                }
+            });
+            return true;
+        } else if (action.equals("trackUIEvents")) {
+            Flyy.trackUIEvents(new FlyyUIEventsListener() {
+                @Override
+                public void onEventDone(FlyyUIEvent flyyUIEvent) {
+                    callbackContext.success(flyyUIEvent);
+                }
+            });
+            return true;
         }
 
 

@@ -63,3 +63,36 @@ exports.setAppPackage = function (packageName,success, error) {
 exports.handleNotification = function (remoteMessage,success, error) {
     exec(success, error, 'FlyyPlugin', 'handleNotification', [remoteMessage]);
 };
+exports.navigateToInviteAndEarnActivity = function (offerId, success, error) {
+    exec(success, error, 'FlyyPlugin', 'navigateToInviteAndEarnActivity', [offerId]);
+};
+exports.navigateToCustomInviteAndEanActivity = function (offerId, toolbarItemsColor, success, error) {
+    exec(success, error, 'FlyyPlugin', 'navigateToCustomInviteAndEanActivity', [offerId, toolbarItemsColor]);
+};
+exports.setThemeColor = function (colorPrimary, colorPrimaryDark, success, error) {
+    exec(success, error, 'FlyyPlugin', 'setThemeColor', [colorPrimary, colorPrimaryDark]);
+};
+exports.getShareData = function (offerId, success, error) {
+    exec(success, error, 'FlyyPlugin', 'getShareData', [offerId]);
+};
+exports.getReferralCount = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'getReferralCount', []);
+};
+exports.getScratchCardCount = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'getScratchCardCount', []);
+};
+exports.getPreviousLeaderboardWinners = function (tag, success, error) {
+    exec(success, error, 'FlyyPlugin', 'getPreviousLeaderboardWinners', [tag]);
+};
+exports.getLeaderboardParticipants = function (tag, success, error) {
+    exec(success, error, 'FlyyPlugin', 'getLeaderboardParticipants', [tag]);
+};
+exports.getWalletBalance = function (walletLabel, success, error) {
+    exec(success, error, 'FlyyPlugin', 'getWalletBalance', [walletLabel]);
+};
+exports.getReferrerDetails = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'getReferrerDetails', []);
+};
+exports.trackUIEvents = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'trackUIEvents', []);
+};
