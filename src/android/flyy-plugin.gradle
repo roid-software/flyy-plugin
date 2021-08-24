@@ -6,5 +6,5 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.roid-software:flyy-sdk:1.4.1'
+    implementation 'com.github.roid-software:flyy-sdk:1.4.7'
 }

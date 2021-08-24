@@ -69,6 +69,12 @@ exports.navigateToInviteAndEarnActivity = function (offerId, success, error) {
 exports.navigateToCustomInviteAndEanActivity = function (offerId, toolbarItemsColor, success, error) {
     exec(success, error, 'FlyyPlugin', 'navigateToCustomInviteAndEanActivity', [offerId, toolbarItemsColor]);
 };
+exports.navigateToBonanzaActivity = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'navigateToBonanzaActivity', []);
+};
+exports.navigateToChallengeDetailActivity = function (offerId, success, error) {
+    exec(success, error, 'FlyyPlugin', 'navigateToChallengeDetailActivity', [offerId]);
+};
 exports.setThemeColor = function (colorPrimary, colorPrimaryDark, success, error) {
     exec(success, error, 'FlyyPlugin', 'setThemeColor', [colorPrimary, colorPrimaryDark]);
 };
@@ -92,6 +98,9 @@ exports.getWalletBalance = function (walletLabel, success, error) {
 };
 exports.getReferrerDetails = function (success, error) {
     exec(success, error, 'FlyyPlugin', 'getReferrerDetails', []);
+};
+exports.getOffersCount = function (success, error) {
+    exec(success, error, 'FlyyPlugin', 'getOffersCount', []);
 };
 exports.trackUIEvents = function (success, error) {
     exec(success, error, 'FlyyPlugin', 'trackUIEvents', []);

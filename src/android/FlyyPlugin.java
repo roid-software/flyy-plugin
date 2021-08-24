@@ -2,10 +2,13 @@ package cordova.plugin.theflyy;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+// import org.apache.cordova.PluginResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
 
 import android.content.Intent;
 import android.content.Context;
@@ -27,6 +30,8 @@ import theflyy.com.flyy.helpers.FlyyFetchReferrerDetailsListener;
 import theflyy.com.flyy.model.externals.FlyyReferrerDetails;
 import theflyy.com.flyy.helpers.FlyyUIEventsListener;
 import theflyy.com.flyy.model.FlyyUIEvent;
+import theflyy.com.flyy.helpers.FlyyFetchOffersCountListener;
+import theflyy.com.flyy.model.FlyyOffersCount;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -246,7 +251,8 @@ public class FlyyPlugin extends CordovaPlugin {
         } else if (action.equals("navigateToInviteAndEarnActivity")) {
             String offerId = args.getString(0);
             if (offerId != null && offerId.length() > 0) {
-                Flyy.navigateToInviteAndEarnActivity(context, offerId);
+                Integer offer_id = Integer.parseInt(offerId);
+                Flyy.navigateToInviteAndEarnActivity(context, offer_id);
                 callbackContext.success("true");
             } else {
                 callbackContext.error("Expected one non-empty string argument.");
@@ -256,11 +262,22 @@ public class FlyyPlugin extends CordovaPlugin {
             String offerId = args.getString(0);
             String toolbarItemsColor = args.getString(1);
             if (offerId != null && offerId.length() > 0) {
-                Flyy.navigateToCustomInviteAndEanActivity(context, offerId, toolbarItemsColor);
+                Integer offer_id = Integer.parseInt(offerId);
+                Flyy.navigateToCustomInviteAndEanActivity(context, offer_id, toolbarItemsColor);
                 callbackContext.success("true");
             } else {
                 callbackContext.error("Expected at least one non-empty string argument.");
             }
+            return true;
+        }  else if (action.equals("navigateToBonanzaActivity")) {
+            Flyy.navigateToBonanzaActivity(context);
+            callbackContext.success("true");
+            return true;
+        }  else if (action.equals("navigateToChallengeDetailActivity")) {
+            String offerId = args.getString(0);
+            Integer offer_id = Integer.parseInt(offerId);
+            Flyy.navigateToChallengeDetailActivity(context, offer_id);
+            callbackContext.success("true");
             return true;
         } else if (action.equals("setThemeColor")) {
             String colorPrimary = args.getString(0);
@@ -274,10 +291,15 @@ public class FlyyPlugin extends CordovaPlugin {
             return true;
         } else if (action.equals("getShareData")) {
             String offerId = args.getString(0);
-            Flyy.getShareData(context, offerId, new FlyyReferralDataFetchedListener() {
+            Integer offer_id = Integer.parseInt(offerId);
+            Flyy.getShareData(context, offer_id, new FlyyReferralDataFetchedListener() {
                 @Override
                 public void onReferralDetailsFetched(FlyyReferralDetails referralDetails) {
-                    callbackContext.success(referralDetails);
+                    // PluginResult result = new PluginResult(PluginResult.Status.OK, new Gson().toJson(referralDetails));
+                    // result.setKeepCallback(true);
+                    // callbackContext.sendPluginResult(result);
+
+                    callbackContext.success(new Gson().toJson(referralDetails));
                 }
 
                 @Override
@@ -290,7 +312,7 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.getReferralCount(context, new FlyyReferralCountFetchedListener() {
                 @Override
                 public void onReferralCountFetched(int referralsCount) {
-                    callbackContext.success(referralsCount);
+                    callbackContext.success(new Gson().toJson(referralsCount));
                 }
 
                 @Override
@@ -303,7 +325,7 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.getScratchCardCount(context, new FlyyFetchScratchCardCountListener() {
                 @Override
                 public void onSuccess(FlyyScrachCardCount flyyScrachCardCount) {
-                    callbackContext.success(flyyScrachCardCount);
+                    callbackContext.success(new Gson().toJson(flyyScrachCardCount));
                 }
 
                 @Override
@@ -318,7 +340,7 @@ public class FlyyPlugin extends CordovaPlugin {
                 Flyy.getPreviousLeaderboardWinners(context, tag, new FlyyFetchLeaderboardDataListner() {
                     @Override
                     public void onSuccess(FlyyLeaderboardData flyyLeaderboardData) {
-                        callbackContext.success(flyyLeaderboardData);
+                        callbackContext.success(new Gson().toJson(flyyLeaderboardData));
                     }
 
                     @Override
@@ -336,7 +358,7 @@ public class FlyyPlugin extends CordovaPlugin {
                 Flyy.getLeaderboardParticipants(context, tag, new FlyyFetchLeaderboardDataListner() {
                     @Override
                     public void onSuccess(FlyyLeaderboardData flyyLeaderboardData) {
-                        callbackContext.success(flyyLeaderboardData);
+                        callbackContext.success(new Gson().toJson(flyyLeaderboardData));
                     }
 
                     @Override
@@ -354,7 +376,7 @@ public class FlyyPlugin extends CordovaPlugin {
                 Flyy.getWalletBalance(context, wallet_label, new FlyyFetchWalletDataListener() {
                     @Override
                     public void onSuccess(FlyySpecificWalletData flyySpecificWalletData) {
-                        callbackContext.success(flyySpecificWalletData);
+                        callbackContext.success(new Gson().toJson(flyySpecificWalletData));
                     }
 
                     @Override
@@ -370,7 +392,20 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.getReferrerDetails(context, new FlyyFetchReferrerDetailsListener() {
                 @Override
                 public void onSuccess(FlyyReferrerDetails flyyReferrerDetails) {
-                    callbackContext.success(flyyReferrerDetails);
+                    callbackContext.success(new Gson().toJson(flyyReferrerDetails));
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    callbackContext.error(message);
+                }
+            });
+            return true;
+        } else if (action.equals("getOffersCount")) {
+            Flyy.getOffersCount(context, new FlyyFetchOffersCountListener() {
+                @Override
+                public void onSuccess(FlyyOffersCount flyyOffersCount) {
+                    callbackContext.success(new Gson().toJson(flyyOffersCount));
                 }
 
                 @Override
@@ -383,7 +418,7 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.trackUIEvents(new FlyyUIEventsListener() {
                 @Override
                 public void onEventDone(FlyyUIEvent flyyUIEvent) {
-                    callbackContext.success(flyyUIEvent);
+                    callbackContext.success(new Gson().toJson(flyyUIEvent));
                 }
             });
             return true;
