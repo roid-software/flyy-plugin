@@ -14,22 +14,43 @@ import FlyyFramework
         if partnerToken != nil && !partnerToken!.isEmpty && environment != nil && !environment!.isEmpty {
             if environment == "stage" {
                 Flyy.sharedInstance.initSDK(partnerToken: partnerToken!, environment: Flyy.FLYY_ENVIRONMENT_STAGING)
-                pluginResult = CDVPluginResult(
-                  status: CDVCommandStatus_OK,
-                  messageAs: "true"
-                )
             } else if environment == "production" {
                 Flyy.sharedInstance.initSDK(partnerToken: partnerToken!, environment: Flyy.FLYY_ENVIRONMENT_PRODUCTION)
-                pluginResult = CDVPluginResult(
-                  status: CDVCommandStatus_ERROR,
-                  messageAs: "Expected enviroment variable as either 'stage' or 'production'."
-                )
             }
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_OK,
+              messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_ERROR,
+              messageAs: "Expected enviroment variable as either 'stage' or 'production'."
+            )
         }
     }
     
     @objc(openOfferActivity:)
     func openOfferActivity(command: CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+          status: CDVCommandStatus_ERROR
+        )
+        
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        
+        if segmentId != nil && !segmentId!.isEmpty {
+            Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
+            Flyy.sharedInstance.openOffersPage(navigationController: self.viewController.navigationController!)
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_OK,
+              messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_ERROR,
+              messageAs: "Expected one non-empty string argument."
+            )
+        }
+        
         
     }
     
@@ -50,17 +71,70 @@ import FlyyFramework
     
     @objc(setUser:)
     func setUser(command: CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+          status: CDVCommandStatus_ERROR
+        )
         
+        let extUid = (command.arguments[0] as? NSObject)?.value(forKey: "ext_uid") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        
+        if extUid != nil && !extUid!.isEmpty {
+            Flyy.sharedInstance.setUser(externalUserId: extUid!, segmentId: segmentId!)
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_OK,
+              messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_ERROR,
+              messageAs: "Expected one non-empty string argument."
+            )
+        }
     }
     
     @objc(setNewUser:)
     func setNewUser(command: CDVInvokedUrlCommand) {
-    
+        var pluginResult = CDVPluginResult(
+          status: CDVCommandStatus_ERROR
+        )
+        
+        let extUid = (command.arguments[0] as? NSObject)?.value(forKey: "ext_uid") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        
+        if extUid != nil && !extUid!.isEmpty {
+            Flyy.sharedInstance.setNewUser(externalUserId: extUid!, segmentId: segmentId!)
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_OK,
+              messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_ERROR,
+              messageAs: "Expected one non-empty string argument."
+            )
+        }
     }
     
     @objc(setUsername:)
     func setUsername(command: CDVInvokedUrlCommand) {
-    
+        var pluginResult = CDVPluginResult(
+          status: CDVCommandStatus_ERROR
+        )
+        
+        let userName = (command.arguments[0] as? NSObject)?.value(forKey: "user_name") as? String
+        
+        if userName != nil && !userName!.isEmpty {
+            Flyy.sharedInstance.setUserName(userName: userName!))
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_OK,
+              messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+              status: CDVCommandStatus_ERROR,
+              messageAs: "Expected one non-empty string argument."
+            )
+        }
     }
     
     @objc(trackEvent:)
