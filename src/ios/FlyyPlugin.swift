@@ -35,7 +35,7 @@ import FlyyFramework
             status: CDVCommandStatus_ERROR
         )
         
-        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -59,7 +59,7 @@ import FlyyFramework
             status: CDVCommandStatus_ERROR
         )
         
-        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -83,7 +83,7 @@ import FlyyFramework
             status: CDVCommandStatus_ERROR
         )
         
-        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -106,7 +106,7 @@ import FlyyFramework
             status: CDVCommandStatus_ERROR
         )
         
-        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -130,7 +130,7 @@ import FlyyFramework
         )
         
         let extUid = (command.arguments[0] as? NSObject)?.value(forKey: "ext_uid") as? String
-        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if extUid != nil && !extUid!.isEmpty {
             Flyy.sharedInstance.setUser(externalUserId: extUid!, segmentId: segmentId!)
@@ -153,7 +153,7 @@ import FlyyFramework
         )
         
         let extUid = (command.arguments[0] as? NSObject)?.value(forKey: "ext_uid") as? String
-        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if extUid != nil && !extUid!.isEmpty {
             Flyy.sharedInstance.setNewUser(externalUserId: extUid!, segmentId: segmentId!)
@@ -240,7 +240,7 @@ import FlyyFramework
             status: CDVCommandStatus_ERROR
         )
         
-        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[0] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -264,7 +264,7 @@ import FlyyFramework
         )
         
         let title = (command.arguments[0] as? NSObject)?.value(forKey: "title") as? String
-        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segment_id") as? String
+        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if title != nil && !title!.isEmpty && segmentId != nil && !segmentId!.isEmpty {
             Flyy.sharedInstance.setSegmentId(segementId: segmentId!)
@@ -315,6 +315,24 @@ import FlyyFramework
     
     @objc(handleNotification:)
     func handleNotification(command: CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_ERROR
+        )
+        
+        let remoteMessage = (command.arguments[0] as? NSObject)?.value(forKey: "remote_message") as? String
+        
+        if remoteMessage != nil && !remoteMessage!.isEmpty {
+            Flyy.sharedInstance.handleNotification(userInfo: remoteMessage!, navigationController: self.viewController.navigationController!)
+            pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_OK,
+                messageAs: "true"
+            )
+        } else {
+            pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_ERROR,
+                messageAs: "Expected one non-empty string argument."
+            )
+        }
         
     }
     
