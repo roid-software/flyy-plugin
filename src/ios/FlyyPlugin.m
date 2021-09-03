@@ -73,5 +73,39 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)startOfferActivity: (CDVInvokedUrlCommand *) command {
+    CDVPluginResult* pluginResult = nil;
+    NSString* segmentId = [command.arguments objectAtIndex:0];
+    
+    Flyy *flyyInstance = [[Flyy alloc] init];
+    
+    if (segmentId != nil && segmentId.length > 0) {
+        [flyyInstance setSegmentIdWithSegementId:segmentId];
+        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController segmentId:segmentId];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void) naviagteToPage :(NSString *)pageTitle :(NSString *)pageurl :(NSString *)segmentId {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            
+            UINavigationController *navController = (UINavigationController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+            WebViewController *webViewController = [[WebViewController alloc] init];
+            webViewController.pageLoadingTitle = pageTitle;
+            webViewController.pageUrl = pageurl;
+            webViewController.segmentId = segmentId;
+            webViewController.themeColor = themeColor;
+            navController.navigationBarHidden = YES;
+            [navController pushViewController:webViewController animated:YES];
+        });
+    });
+}
+
 @end
 
