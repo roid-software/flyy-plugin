@@ -17,7 +17,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)initSdk: (CDVInvokedUrlCommand *) command {
+- (void)initSDK: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* partnerToken = [command.arguments objectAtIndex:0];
     NSString* environment = [command.arguments objectAtIndex:1];
@@ -42,15 +42,23 @@
 }
 
 - (void)setUser: (CDVInvokedUrlCommand *) command {
-    CDVPluginResult* pluginResult = nil;
+    __block CDVPluginResult* pluginResult = nil;
     NSString* extUid = [command.arguments objectAtIndex:0];
     NSString* segmentId = [command.arguments objectAtIndex:1];
     
     Flyy *flyyInstance = [[Flyy alloc] init];
     
     if (extUid != nil && extUid.length > 0) {
-        [flyyInstance setUserWithExternalUserId:extUid segmentId:segmentId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+        [flyyInstance setUserWithExternalUserId:extUid segmentId:segmentId onComplete: ^(BOOL success) {
+               if(success) {
+                   pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+               } else {
+                   pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"false"];
+               }
+           }];
+        
+//        [flyyInstance setUserWithExternalUserId:extUid segmentId:segmentId];
+        
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
     }
@@ -88,7 +96,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)startOfferActivity: (CDVInvokedUrlCommand *) command {
+- (void)openOfferActivity: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* segmentId = [command.arguments objectAtIndex:0];
     
@@ -96,8 +104,8 @@
     
     if (segmentId != nil && segmentId.length > 0) {
         [flyyInstance setSegmentIdWithSegementId:segmentId];
-//        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
-        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController segmentId:segmentId];
+        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController segmentId:segmentId];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
