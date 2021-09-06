@@ -2,10 +2,6 @@
 
 @implementation FlyyPlugin
 
-- (void)pluginInitialize {
-    
-}
-
 - (void)setAppPackage: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* packageName = [command.arguments objectAtIndex:0];

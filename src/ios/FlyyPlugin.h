@@ -2,9 +2,9 @@
 #import <FlyyFramework/FlyyFramework.h>
 #import "WebViewController.h"
 
-@interface FlyyPlugin : CDVPlugin {
-    
-}
+@interface FlyyPlugin : CDVPlugin
+
+@property NSString *callbackId;
 
 - (void)setAppPackage:(CDVInvokedUrlCommand *)command;
 - (void)initSdk:(CDVInvokedUrlCommand *)command;
@@ -12,7 +12,5 @@
 - (void)setNewUser:(CDVInvokedUrlCommand *)command;
 - (void)setUsername:(CDVInvokedUrlCommand *)command;
 - (void)startOfferActivity:(CDVInvokedUrlCommand *)command;
-
-
 
 @end
