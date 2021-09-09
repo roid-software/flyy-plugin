@@ -42,7 +42,7 @@ public class FlyyPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
         
-        if (action.equals("intSdk")) {
+        if (action.equals("initSDK")) {
             // Flyy.init(context, "f8ea5221f71be8adde5d");
             String partner_token = args.getString(0);
             String enviroment = args.getString(1);
