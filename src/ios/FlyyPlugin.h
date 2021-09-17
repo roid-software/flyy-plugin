@@ -1,6 +1,5 @@
 #import <Cordova/CDV.h>
 #import <FlyyFramework/FlyyFramework.h>
-#import "FlyyWebViewController.h"
 
 @interface FlyyPlugin : CDVPlugin
 

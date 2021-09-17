@@ -41,7 +41,12 @@
             <source url="https://github.com/CocoaPods/Specs.git"/>
             </config>
             <pods use-frameworks="true">
-               <pod name="FlyyFramework" spec="~> 1.2.1"/>
+               <pod name="FlyyFramework" spec="~> 1.2.2"/>
+
+                <!-- <framework src="FlyyFramework" type="podspec" spec=":path => '/Users/poojadeshpande/Documents/Projects/iOS_Projects/flyy-ios-sdk'" /> -->
+               <!-- <pod name="FlyyFramework" path="/Users/poojadeshpande/Documents/Projects/iOS_Projects/flyy-ios-sdk" /> -->
+               <!-- spec="~> 1.2.2" -->
+
             </pods>
          </podspec>
     </platform>

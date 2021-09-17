@@ -595,29 +595,29 @@
 }
 
 - (void) naviagteToPage :(NSString *)pageTitle :(NSString *)pageurl :(NSString *)segmentId {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        dispatch_async(dispatch_get_main_queue(), ^(){
+    //     dispatch_async(dispatch_get_main_queue(), ^(){
             
-            //                        CDVViewController* viewController = [CDVViewController new];
+    //         //                        CDVViewController* viewController = [CDVViewController new];
             
             
             
-            FlyyWebViewController *webViewController = [[FlyyWebViewController alloc] init];
-            webViewController.pageLoadingTitle = pageTitle;
-            webViewController.pageUrl = pageurl;
-            webViewController.segmentId = segmentId;
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    //         FlyyWebViewController *webViewController = [[FlyyWebViewController alloc] init];
+    //         webViewController.pageLoadingTitle = pageTitle;
+    //         webViewController.pageUrl = pageurl;
+    //         webViewController.segmentId = segmentId;
+    //         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
             
-            if ([[navigationController topViewController] isKindOfClass:[FlyyWebViewController class]]){
-                navigationController.navigationBarHidden = YES;
-            }else{
-                navigationController.navigationBarHidden = NO;
-            }
+    //         if ([[navigationController topViewController] isKindOfClass:[FlyyWebViewController class]]){
+    //             navigationController.navigationBarHidden = YES;
+    //         }else{
+    //             navigationController.navigationBarHidden = NO;
+    //         }
             
-            [navigationController pushViewController:webViewController animated:YES];
-        });
-    });
+    //         [navigationController pushViewController:webViewController animated:YES];
+    //     });
+    // });
 }
 
 @end
