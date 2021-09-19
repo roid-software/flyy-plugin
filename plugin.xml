@@ -33,8 +33,6 @@
          <pods-config ios-min-version="11.0" use-frameworks="true"/>
          <header-file src="src/ios/Flyyplugin.h"/>
          <source-file src="src/ios/Flyyplugin.m"/>
-         <header-file src="src/ios/WebViewController.h"/>
-         <source-file src="src/ios/WebViewController.m"/>
 
          <podspec>
             <config>
@@ -42,11 +40,6 @@
             </config>
             <pods use-frameworks="true">
                <pod name="FlyyFramework" spec="~> 1.2.2"/>
-
-                <!-- <framework src="FlyyFramework" type="podspec" spec=":path => '/Users/poojadeshpande/Documents/Projects/iOS_Projects/flyy-ios-sdk'" /> -->
-               <!-- <pod name="FlyyFramework" path="/Users/poojadeshpande/Documents/Projects/iOS_Projects/flyy-ios-sdk" /> -->
-               <!-- spec="~> 1.2.2" -->
-
             </pods>
          </podspec>
     </platform>
