@@ -57,8 +57,6 @@
             }
         }];
         
-        //        [flyyInstance setUserWithExternalUserId:extUid segmentId:segmentId];
-        
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
     }
@@ -96,264 +94,229 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)openOfferActivity: (CDVInvokedUrlCommand *) command {
-    CDVPluginResult* pluginResult = nil;
-    NSString* segmentId = [command.arguments objectAtIndex:0];
+// - (void)openOfferActivity: (CDVInvokedUrlCommand *) command {
+//     CDVPluginResult* pluginResult = nil;
+//     NSString* segmentId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (segmentId != nil && segmentId.length > 0) {
-        [flyyInstance setSegmentIdWithSegementId:segmentId];
-        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
-        //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+//     if (segmentId != nil && segmentId.length > 0) {
+//         [flyyInstance setSegmentIdWithSegementId:segmentId];
+//         [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//         //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+// }
 
-- (void)openRewardsActivity: (CDVInvokedUrlCommand *) command {
-    CDVPluginResult* pluginResult = nil;
-    NSString* segmentId = [command.arguments objectAtIndex:0];
+// - (void)openRewardsActivity: (CDVInvokedUrlCommand *) command {
+//     CDVPluginResult* pluginResult = nil;
+//     NSString* segmentId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (segmentId != nil && segmentId.length > 0) {
-        [flyyInstance setSegmentIdWithSegementId:segmentId];
-        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
-        //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+//     if (segmentId != nil && segmentId.length > 0) {
+//         [flyyInstance setSegmentIdWithSegementId:segmentId];
+//         [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//         //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+// }
 
-- (void)openWalletActivity: (CDVInvokedUrlCommand *) command {
-    CDVPluginResult* pluginResult = nil;
-    NSString* segmentId = [command.arguments objectAtIndex:0];
+// - (void)openWalletActivity: (CDVInvokedUrlCommand *) command {
+//     CDVPluginResult* pluginResult = nil;
+//     NSString* segmentId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (segmentId != nil && segmentId.length > 0) {
-        [flyyInstance setSegmentIdWithSegementId:segmentId];
-        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
-        //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+//     if (segmentId != nil && segmentId.length > 0) {
+//         [flyyInstance setSegmentIdWithSegementId:segmentId];
+//         [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//         //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+// }
 
-- (void)openGiftCardsActivity: (CDVInvokedUrlCommand *) command {
-    CDVPluginResult* pluginResult = nil;
-    NSString* segmentId = [command.arguments objectAtIndex:0];
+// - (void)openGiftCardsActivity: (CDVInvokedUrlCommand *) command {
+//     CDVPluginResult* pluginResult = nil;
+//     NSString* segmentId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (segmentId != nil && segmentId.length > 0) {
-        [flyyInstance setSegmentIdWithSegementId:segmentId];
-        [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
-        //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+//     if (segmentId != nil && segmentId.length > 0) {
+//         [flyyInstance setSegmentIdWithSegementId:segmentId];
+//         [self naviagteToPage:@"Loading Offers..." :@"https://web-sdk.theflyy.com/" :segmentId];
+//         //        [flyyInstance openOffersPageWithNavigationController:self.viewController.navigationController  segmentId:segmentId];
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+// }
 
-- (void)trackEvent: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* key = [command.arguments objectAtIndex:0];
-    NSString* value = [command.arguments objectAtIndex:1];
+// - (void)trackEvent: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* key = [command.arguments objectAtIndex:0];
+//     NSString* value = [command.arguments objectAtIndex:1];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (key != nil && key.length > 0 && value != nil && value.length > 0) {
-        [flyyInstance sendEventWithKey:@"offers_page" value:@"opened" onComplete: ^(BOOL success) {
-            if(success) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-            } else {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"false"];
-            }
-        }];
+//     if (key != nil && key.length > 0 && value != nil && value.length > 0) {
+//         [flyyInstance sendEventWithKey:@"offers_page" value:@"opened" onComplete: ^(BOOL success) {
+//             if(success) {
+//                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//             } else {
+//                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"false"];
+//             }
+//         }];
         
         
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+// }
 
-- (void)sendNotificationReceived: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* notificationId = [command.arguments objectAtIndex:0];
-    NSString* offerId = [command.arguments objectAtIndex:1];
-}
+// - (void)sendNotificationReceived: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* notificationId = [command.arguments objectAtIndex:0];
+//     NSString* offerId = [command.arguments objectAtIndex:1];
+// }
 
-- (void)notificationClicked: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* notificationId = [command.arguments objectAtIndex:0];
-    NSString* offerId = [command.arguments objectAtIndex:1];
-    NSString* source = [command.arguments objectAtIndex:1];
-}
+// - (void)notificationClicked: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* notificationId = [command.arguments objectAtIndex:0];
+//     NSString* offerId = [command.arguments objectAtIndex:1];
+//     NSString* source = [command.arguments objectAtIndex:1];
+// }
 
 //TODO
-- (void)setContactNumber: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* contactNumber = [command.arguments objectAtIndex:0];
+// - (void)setContactNumber: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* contactNumber = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (contactNumber != nil && contactNumber.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     if (contactNumber != nil && contactNumber.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)startStampActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* contactNumber = [command.arguments objectAtIndex:0];
+// - (void)startStampActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* contactNumber = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (contactNumber != nil && contactNumber.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     if (contactNumber != nil && contactNumber.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)startReferralHistoryActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* contactNumber = [command.arguments objectAtIndex:0];
+// - (void)startReferralHistoryActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* contactNumber = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (contactNumber != nil && contactNumber.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     if (contactNumber != nil && contactNumber.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)startTournamentListActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* contactNumber = [command.arguments objectAtIndex:0];
+// - (void)startTournamentListActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* contactNumber = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (contactNumber != nil && contactNumber.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     if (contactNumber != nil && contactNumber.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)setRewardGridSpanCount: (CDVInvokedUrlCommand *) command {
+// - (void)setRewardGridSpanCount: (CDVInvokedUrlCommand *) command {
     
-}
+// }
 
 //Todo
-- (void)openDeeplink: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* contactNumber = [command.arguments objectAtIndex:0];
+// - (void)openDeeplink: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* contactNumber = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    if (contactNumber != nil && contactNumber.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     if (contactNumber != nil && contactNumber.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
 //TODO
-- (void)handleNotification: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+// - (void)handleNotification: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* userInfo = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    //    [flyyInstance handleNotificationWithUserInfo:userInfo navigationController:<#(UINavigationController * _Nonnull)#>]
-    if (userInfo != nil && userInfo.length > 0) {
-        //        [flyyInstance setContac]
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-    }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     //    [flyyInstance handleNotificationWithUserInfo:userInfo navigationController:<#(UINavigationController * _Nonnull)#>]
+//     if (userInfo != nil && userInfo.length > 0) {
+//         //        [flyyInstance setContac]
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+//     } else {
+//         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+//     }
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)navigateToInviteAndEarnActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+// - (void)navigateToInviteAndEarnActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
     
-//    Flyy *flyyInstance = [[Flyy alloc] init];
-//
-//    //    [flyyInstance handleNotificationWithUserInfo:userInfo navigationController:<#(UINavigationController * _Nonnull)#>]
-//    if (contactNumber != nil && contactNumber.length > 0) {
-//        //        [flyyInstance setContac]
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-//    } else {
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-//    }
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
-}
+// }
 
-- (void)navigateToCustomInviteAndEanActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+// - (void)navigateToCustomInviteAndEanActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* userInfo = [command.arguments objectAtIndex:0];
     
-//    Flyy *flyyInstance = [[Flyy alloc] init];
-//
-//    //    [flyyInstance handleNotificationWithUserInfo:userInfo navigationController:<#(UINavigationController * _Nonnull)#>]
-//    if (contactNumber != nil && contactNumber.length > 0) {
-//        //        [flyyInstance setContac]
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-//    } else {
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-//    }
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
-}
+// }
 
-- (void)navigateToBonanzaActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+// - (void)navigateToBonanzaActivity: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
     
-//    Flyy *flyyInstance = [[Flyy alloc] init];
-//
-//    //    [flyyInstance handleNotificationWithUserInfo:userInfo navigationController:<#(UINavigationController * _Nonnull)#>]
-//    if (userInfo != nil && userInfo.length > 0) {
-//        //        [flyyInstance setContac]
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-//    } else {
-//        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
-//    }
-//    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
-}
+// }
 
 - (void)setThemeColor: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
@@ -371,253 +334,227 @@
     
 }
 
-- (void)getShareData: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* offerId = [command.arguments objectAtIndex:0];
+// - (void)getShareData: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* offerId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getShareDataOnComplete: ^(BOOL success, NSArray<NSString *> *referralDetails) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"referral_link": referralDetails[0],
-                                          @"referral_message": referralDetails[1],
-                                          @"share_message": referralDetails[2]
-            };
+//     [flyyInstance getShareDataOnComplete: ^(BOOL success, NSArray<NSString *> *referralDetails) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"referral_link": referralDetails[0],
+//                                           @"referral_message": referralDetails[1],
+//                                           @"share_message": referralDetails[2]
+//             };
             
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
-        }
-    }];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
+//         }
+//     }];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getReferralCount: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* offerId = [command.arguments objectAtIndex:0];
+// - (void)getReferralCount: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* offerId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getReferralCountOnComplete:^(BOOL success, NSInteger referralCount) {
-        if (success) {
-            NSString* referralCountStr = [NSString stringWithFormat:@"%ld", (long)referralCount];
+//     [flyyInstance getReferralCountOnComplete:^(BOOL success, NSInteger referralCount) {
+//         if (success) {
+//             NSString* referralCountStr = [NSString stringWithFormat:@"%ld", (long)referralCount];
 
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralCountStr];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
-        }
-    }];
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralCountStr];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
+//         }
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getScratchCardCount: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    Flyy *flyyInstance = [[Flyy alloc] init];
+// - (void)getScratchCardCount: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getScratchCardCountOnComplete: ^(BOOL success, NSArray<NSNumber *> *scratchCardCountData) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"total_sc_count": scratchCardCountData[0],
-                                          @"scratched_sc_count": scratchCardCountData[1],
-                                          @"unscratched_sc_count": scratchCardCountData[2],
-                                          @"locked_sc_count": scratchCardCountData[3]
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getScratchCardCountOnComplete: ^(BOOL success, NSArray<NSNumber *> *scratchCardCountData) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"total_sc_count": scratchCardCountData[0],
+//                                           @"scratched_sc_count": scratchCardCountData[1],
+//                                           @"unscratched_sc_count": scratchCardCountData[2],
+//                                           @"locked_sc_count": scratchCardCountData[3]
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
-        }
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch the data"];
+//         }
         
-    }];
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getPreviousLeaderboardWinners: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* tag = [command.arguments objectAtIndex:0];
+// - (void)getPreviousLeaderboardWinners: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* tag = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getPreviousLeaderboardWinnersWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"message": message,
-                                          @"participants_count": @(participantsCount),
-                                          @"winners": winners,
-                                          @"previous_winners": previousWinners
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getPreviousLeaderboardWinnersWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"message": message,
+//                                           @"participants_count": @(participantsCount),
+//                                           @"winners": winners,
+//                                           @"previous_winners": previousWinners
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: message];
-        }
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: message];
+//         }
         
-    }];
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getLeaderboardParticipants: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* tag = [command.arguments objectAtIndex:0];
+// - (void)getLeaderboardParticipants: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* tag = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getPreviousLeaderboardWinnersWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"message": message,
-                                          @"participants_count": @(participantsCount),
-                                          @"winners": winners,
-                                          @"previous_winners": previousWinners
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getPreviousLeaderboardWinnersWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"message": message,
+//                                           @"participants_count": @(participantsCount),
+//                                           @"winners": winners,
+//                                           @"previous_winners": previousWinners
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: message];
-        }
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: message];
+//         }
         
-    }];
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getWalletBalance: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* walletLabel = [command.arguments objectAtIndex:0];
+// - (void)getWalletBalance: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* walletLabel = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getWalletBalanceWithWalletLabel:walletLabel onComplete:^(BOOL success, NSArray<NSNumber *> *walletBalanceData) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"balance": walletBalanceData[0],
-                                          @"total_credit": walletBalanceData[1],
-                                          @"total_debit": walletBalanceData[2]
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getWalletBalanceWithWalletLabel:walletLabel onComplete:^(BOOL success, NSArray<NSNumber *> *walletBalanceData) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"balance": walletBalanceData[0],
+//                                           @"total_credit": walletBalanceData[1],
+//                                           @"total_debit": walletBalanceData[2]
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data"];
-        }
-    }];
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data"];
+//         }
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getReferrerDetails: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* tag = [command.arguments objectAtIndex:0];
+// - (void)getReferrerDetails: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* tag = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getReferrerDetailsOnComplete:^(BOOL success, NSArray<NSString *> *referrerDetailsData) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"name": referrerDetailsData[0],
-                                          @"ext_uid": referrerDetailsData[1],
-                                          @"extra_data": referrerDetailsData[2]
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getReferrerDetailsOnComplete:^(BOOL success, NSArray<NSString *> *referrerDetailsData) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"name": referrerDetailsData[0],
+//                                           @"ext_uid": referrerDetailsData[1],
+//                                           @"extra_data": referrerDetailsData[2]
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data."];
-        }
-    }];
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data."];
+//         }
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
-- (void)getOffersCount: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
-    NSString* offerId = [command.arguments objectAtIndex:0];
+// - (void)getOffersCount: (CDVInvokedUrlCommand *) command {
+//     __block CDVPluginResult* pluginResult = nil;
+//     NSString* offerId = [command.arguments objectAtIndex:0];
     
-    Flyy *flyyInstance = [[Flyy alloc] init];
+//     Flyy *flyyInstance = [[Flyy alloc] init];
     
-    [flyyInstance getOffersCountOnComplete: ^(BOOL success, NSArray<NSNumber *> *offersCount) {
-        if (success) {
-            NSDictionary* jsonObject = @{ @"success": @true,
-                                          @"live_offers_count": offersCount[0],
-                                          @"participated_offers_count": offersCount[1]
-            };
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
+//     [flyyInstance getOffersCountOnComplete: ^(BOOL success, NSArray<NSNumber *> *offersCount) {
+//         if (success) {
+//             NSDictionary* jsonObject = @{ @"success": @true,
+//                                           @"live_offers_count": offersCount[0],
+//                                           @"participated_offers_count": offersCount[1]
+//             };
+//             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:nil];
             
             
-            NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//             NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data."];
-        }
-    }];
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
+//         } else {
+//             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Could not fetch data."];
+//         }
+//     }];
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
-}
+// }
 
 - (void)trackUIEvents: (CDVInvokedUrlCommand *) command {
     
-}
-
-- (void) naviagteToPage :(NSString *)pageTitle :(NSString *)pageurl :(NSString *)segmentId {
-    // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-    //     dispatch_async(dispatch_get_main_queue(), ^(){
-            
-    //         //                        CDVViewController* viewController = [CDVViewController new];
-            
-            
-            
-    //         FlyyWebViewController *webViewController = [[FlyyWebViewController alloc] init];
-    //         webViewController.pageLoadingTitle = pageTitle;
-    //         webViewController.pageUrl = pageurl;
-    //         webViewController.segmentId = segmentId;
-    //         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
-            
-    //         if ([[navigationController topViewController] isKindOfClass:[FlyyWebViewController class]]){
-    //             navigationController.navigationBarHidden = YES;
-    //         }else{
-    //             navigationController.navigationBarHidden = NO;
-    //         }
-            
-    //         [navigationController pushViewController:webViewController animated:YES];
-    //     });
-    // });
 }
 
 @end
