@@ -591,6 +591,22 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+- (void)sendFCMTokenToServer: (CDVInvokedUrlCommand *) command {
+    CDVPluginResult* pluginResult = nil;
+    NSString* fcmToken = [command.arguments objectAtIndex:0];
+    
+    flyy = [Flyy sharedFlyyInstance];
+    
+    if (fcmToken != nil && fcmToken.length > 0) {
+        [flyy sendFcmTokenToServerWithFcmToken:fcmToken];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"Expected one argument"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
+}
+
 
 - (void)onSDKClosedWithScreenName:(NSString * _Nonnull)screenName {
     CDVPluginResult *result =

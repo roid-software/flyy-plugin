@@ -115,5 +115,7 @@ cordova.define("cordova-plugin-theflyy.FlyyPlugin", function(require, exports, m
     exports.handleBackGroundNotification = function (remoteMessage,success, error) {
         exec(success, error, 'FlyyPlugin', 'handleBackGroundNotification', [remoteMessage]);
     };
+    exports.sendFCMTokenToServer = function (remoteMessage,success, error) {
+        exec(success, error, 'FlyyPlugin', 'sendFCMTokenToServer', [remoteMessage]);
+    };
 });
-    
