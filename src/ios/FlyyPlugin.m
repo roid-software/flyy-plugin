@@ -310,15 +310,30 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
-//TODO
-- (void)handleNotification: (CDVInvokedUrlCommand *) command {
+- (void)handleForeGroundNotification: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* userInfo = [command.arguments objectAtIndex:0];
     
     flyy = [Flyy sharedFlyyInstance];
     
     if (userInfo != nil && userInfo.length > 0) {
-        [flyy handleNotificationWithUserInfo:userInfo];
+        [flyy handleBackgroundNotificationWithUserInfo: userInfo];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    
+}
+
+- (void)handleBackGroundNotification: (CDVInvokedUrlCommand *) command {
+    __block CDVPluginResult* pluginResult = nil;
+    NSString* userInfo = [command.arguments objectAtIndex:0];
+    
+    flyy = [Flyy sharedFlyyInstance];
+    
+    if (userInfo != nil && userInfo.length > 0) {
+        [flyy handleBackgroundNotificationWithUserInfo: userInfo];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
@@ -578,10 +593,16 @@ static NSString* sdkClosedCommand = nil;
 
 
 - (void)onSDKClosedWithScreenName:(NSString * _Nonnull)screenName {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:screenName];
-    [pluginResult setKeepCallbackAsBool:NO];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:sdkClosedCommand];
-    sdkClosedCommand = nil;
+    CDVPluginResult *result =
+          [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                        messageAsString:screenName];
+      [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
+    
+//    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:screenName];
+//
+//    [self.commandDelegate sendPluginResult:pluginResult callbackId:sdkClosedCommand];
+//    [pluginResult setKeepCallbackAsBool:NO];
+//    sdkClosedCommand = nil;
 }
 
 @end

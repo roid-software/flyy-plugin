@@ -109,5 +109,11 @@ cordova.define("cordova-plugin-theflyy.FlyyPlugin", function(require, exports, m
     exports.onFlyySDKClosed = function (success) {
         exec(success, 'FlyyPlugin', 'onSDKClosedWithScreenName', []);
     }
+    exports.handleForeGroundNotification = function (remoteMessage,success, error) {
+        exec(success, error, 'FlyyPlugin', 'handleForeGroundNotification', [remoteMessage]);
+    };
+    exports.handleBackGroundNotification = function (remoteMessage,success, error) {
+        exec(success, error, 'FlyyPlugin', 'handleBackGroundNotification', [remoteMessage]);
+    };
 });
     
