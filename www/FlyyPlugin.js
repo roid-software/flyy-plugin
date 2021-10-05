@@ -106,5 +106,8 @@ cordova.define("cordova-plugin-theflyy.FlyyPlugin", function(require, exports, m
     exports.trackUIEvents = function (success, error) {
         exec(success, error, 'FlyyPlugin', 'trackUIEvents', []);
     };
-    });
+    exports.onFlyySDKClosed = function (success) {
+        exec(success, 'FlyyPlugin', 'onSDKClosedWithScreenName', []);
+    }
+});
     
