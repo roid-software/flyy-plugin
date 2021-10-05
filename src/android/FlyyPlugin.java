@@ -429,9 +429,10 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.getFlyySDKClosed(new FlyySDKClosedListener() {
                 @Override
                 public void onSDKClosed() {
-                    if (result != null)
+                    if (result != null) {
+                        Flyy.getFlyySDKClosed(null);
                         callbackContext.success("");
-                    result.success("Flyy SDK Closed");
+                    }
                 }
             });
             return true;

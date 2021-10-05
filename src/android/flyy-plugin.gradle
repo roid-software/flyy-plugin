@@ -7,4 +7,5 @@ repositories {
 
 dependencies {
     implementation 'com.github.roid-software:flyy-sdk:1.4.24'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
