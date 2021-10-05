@@ -4,7 +4,7 @@
    <js-module name="FlyyPlugin" src="www/FlyyPlugin.js">
       <clobbers target="cordova.plugins.FlyyPlugin" />
    </js-module>
-   
+
    <!-- Android -->
    <platform name="android">
       <config-file parent="/*" target="res/xml/config.xml">
@@ -33,7 +33,7 @@
          <pods-config ios-min-version="11.0" use-frameworks="true"/>
          <header-file src="src/ios/FlyyPlugin.h"/>
          <source-file src="src/ios/FlyyPlugin.m"/>
-         
+
 
          <podspec>
             <config>
