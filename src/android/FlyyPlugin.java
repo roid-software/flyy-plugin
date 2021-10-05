@@ -12,10 +12,13 @@ import com.google.gson.Gson;
 
 import android.content.Intent;
 import android.content.Context;
+
 import theflyy.com.flyy.views.FlyyOffersActivity;
 import theflyy.com.flyy.Flyy;
 import theflyy.com.flyy.helpers.FlyyUtility;
+
 import com.google.firebase.messaging.RemoteMessage;
+
 import theflyy.com.flyy.helpers.FlyyNotificationHandler;
 import theflyy.com.flyy.helpers.FlyyReferralDataFetchedListener;
 import theflyy.com.flyy.model.FlyyReferralDetails;
@@ -41,15 +44,15 @@ public class FlyyPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
-        
+
         if (action.equals("initSDK")) {
             // Flyy.init(context, "f8ea5221f71be8adde5d");
             String partner_token = args.getString(0);
             String enviroment = args.getString(1);
-        
+
             if (partner_token != null && partner_token.length() > 0 && enviroment != null && enviroment.length() > 0) {
-                if(enviroment.equalsIgnoreCase("stage") || enviroment.equalsIgnoreCase("production")){
-                    Flyy.init(  context, partner_token, enviroment.equalsIgnoreCase("stage") ? Flyy.STAGE : Flyy.PRODUCTION);
+                if (enviroment.equalsIgnoreCase("stage") || enviroment.equalsIgnoreCase("production")) {
+                    Flyy.init(context, partner_token, enviroment.equalsIgnoreCase("stage") ? Flyy.STAGE : Flyy.PRODUCTION);
                     callbackContext.success("true");
                 } else {
                     callbackContext.error("Expected enviroment variable as either 'stage' or 'production'.");
@@ -58,46 +61,46 @@ public class FlyyPlugin extends CordovaPlugin {
                 callbackContext.error("Expected two non-empty string argument.");
             }
             return true;
-        } else if (action.equals("openOfferActivity")){
+        } else if (action.equals("openOfferActivity")) {
             String segmentId = args.getString(0);
 
             if (segmentId != null && segmentId.length() > 0) {
-            Flyy.navigateToOffersActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
+                Flyy.navigateToOffersActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
 
             return true;
-        }  else if (action.equals("openRewardsActivity")){
+        } else if (action.equals("openRewardsActivity")) {
             String segmentId = args.getString(0);
 
             if (segmentId != null && segmentId.length() > 0) {
-            Flyy.navigateToRewardsActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument."); 
+                Flyy.navigateToRewardsActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected one non-empty string argument.");
             }
 
             return true;
-        }   else if (action.equals("openWalletActivity")){
+        } else if (action.equals("openWalletActivity")) {
             String segmentId = args.getString(0);
 
             if (segmentId != null && segmentId.length() > 0) {
-             Flyy.navigateToWalletActivity(context,segmentId);
-             callbackContext.success("true");
-            }else{
-                callbackContext.error("Expected one non-empty string argument.");  
+                Flyy.navigateToWalletActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected one non-empty string argument.");
             }
 
             return true;
-        }   else if (action.equals("openGiftCardsActivity")){
+        } else if (action.equals("openGiftCardsActivity")) {
 
             String segmentId = args.getString(0);
             if (segmentId != null && segmentId.length() > 0) {
-            Flyy.navigateToGiftCardsActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
+                Flyy.navigateToGiftCardsActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
 
@@ -107,14 +110,14 @@ public class FlyyPlugin extends CordovaPlugin {
             String ext_uid = args.getString(0);
             String segmentId = args.getString(1);
             if (ext_uid != null && ext_uid.length() > 0 && segmentId != null && segmentId.length() > 0) {
-                Flyy.setUser(ext_uid,segmentId);
+                Flyy.setUser(ext_uid, segmentId);
                 callbackContext.success("true");
             } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
 
             return true;
-        }  else if (action.equals("setNewUser")) {
+        } else if (action.equals("setNewUser")) {
 
             String ext_uid = args.getString(0);
             if (ext_uid != null && ext_uid.length() > 0) {
@@ -137,7 +140,7 @@ public class FlyyPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("trackEvent")) {
-            
+
             String key = args.getString(0);
             String value = args.getString(1);
             if (key != null && key.length() > 0 && value != null && value.length() > 0) {
@@ -149,10 +152,10 @@ public class FlyyPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("sendNotificationReceived")) {
-            
+
             int notification_id = args.getInt(0);
             int offer_id = args.getInt(1);
-            if (notification_id >=0 && offer_id>=0) {
+            if (notification_id >= 0 && offer_id >= 0) {
                 Flyy.sendNotificationReceived(notification_id, offer_id);
                 callbackContext.success("true");
             } else {
@@ -161,11 +164,11 @@ public class FlyyPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("notificationClicked")) {
-            
+
             int notification_id = args.getInt(0);
             int offer_id = args.getInt(1);
             String source = args.getString(2);
-            if (notification_id >= 0 && offer_id >= 0 && source !=null && source.length()>0) {
+            if (notification_id >= 0 && offer_id >= 0 && source != null && source.length() > 0) {
                 Flyy.sendNotificationClicked(notification_id, offer_id, source);
                 callbackContext.success("true");
             } else {
@@ -173,76 +176,76 @@ public class FlyyPlugin extends CordovaPlugin {
             }
 
             return true;
-        }else if (action.equals("setContactNumber")) {
+        } else if (action.equals("setContactNumber")) {
             String key = args.getString(0);
-            if (key !=null && key.length()>0) {
-            Flyy.setContactNumber(key);
-            callbackContext.success("true");
-            }else{
+            if (key != null && key.length() > 0) {
+                Flyy.setContactNumber(key);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("startStampActivity")) {
+        } else if (action.equals("startStampActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length()>0) {
-            Flyy.navigateToStampActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
+            if (segmentId != null && segmentId.length() > 0) {
+                Flyy.navigateToStampActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("startReferralHistoryActivity")) {
+        } else if (action.equals("startReferralHistoryActivity")) {
             String segmentId = args.getString(0);
-            if (segmentId !=null && segmentId.length()>0) {
-            Flyy.navigateToReferralHistoryActivity(context,segmentId);
-            callbackContext.success("true");
-            }else{
+            if (segmentId != null && segmentId.length() > 0) {
+                Flyy.navigateToReferralHistoryActivity(context, segmentId);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("startTournamentListActivity")) {
+        } else if (action.equals("startTournamentListActivity")) {
             String title = args.getString(0);
             String segmentId = args.getString(1);
-            if (title !=null && title.length()>0 && segmentId !=null && segmentId.length()>0) {
-            Flyy.navigateToTournamentListActivity(context,title,segmentId);
-            callbackContext.success("true");
-            }else{
+            if (title != null && title.length() > 0 && segmentId != null && segmentId.length() > 0) {
+                Flyy.navigateToTournamentListActivity(context, title, segmentId);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("setRewardGridSpanCount")) {
+        } else if (action.equals("setRewardGridSpanCount")) {
             int gridSpanCount = args.getInt(0);
 
-            if (gridSpanCount>=0) {
-            FlyyUtility.setRewardGridSpanCount(gridSpanCount);
-            callbackContext.success("true");
-            }else{
+            if (gridSpanCount >= 0) {
+                FlyyUtility.setRewardGridSpanCount(gridSpanCount);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("openDeeplink")) {
-            if (action !=null && action.length()>0) {
-            FlyyUtility.openDeeplink(context,action);
-            callbackContext.success("true");
-            }else{
+        } else if (action.equals("openDeeplink")) {
+            if (action != null && action.length() > 0) {
+                FlyyUtility.openDeeplink(context, action);
+                callbackContext.success("true");
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
-        }else if (action.equals("setAppPackage")) {
+        } else if (action.equals("setAppPackage")) {
             String packageName = args.getString(0);
-            if (packageName !=null && packageName.length()>0) {
+            if (packageName != null && packageName.length() > 0) {
                 Flyy.setPackageName(packageName);
                 callbackContext.success("true");
-            }else{
+            } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
         } else if (action.equals("handleNotification")) {
             RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
@@ -269,11 +272,11 @@ public class FlyyPlugin extends CordovaPlugin {
                 callbackContext.error("Expected at least one non-empty string argument.");
             }
             return true;
-        }  else if (action.equals("navigateToBonanzaActivity")) {
+        } else if (action.equals("navigateToBonanzaActivity")) {
             Flyy.navigateToBonanzaActivity(context);
             callbackContext.success("true");
             return true;
-        }  else if (action.equals("navigateToChallengeDetailActivity")) {
+        } else if (action.equals("navigateToChallengeDetailActivity")) {
             String offerId = args.getString(0);
             Integer offer_id = Integer.parseInt(offerId);
             Flyy.navigateToChallengeDetailActivity(context, offer_id);
@@ -419,6 +422,16 @@ public class FlyyPlugin extends CordovaPlugin {
                 @Override
                 public void onEventDone(FlyyUIEvent flyyUIEvent) {
                     callbackContext.success(new Gson().toJson(flyyUIEvent));
+                }
+            });
+            return true;
+        } else if (action.equals("onSDKClosedWithScreenName")) {
+            Flyy.getFlyySDKClosed(new FlyySDKClosedListener() {
+                @Override
+                public void onSDKClosed() {
+                    if (result != null)
+                        callbackContext.success("");
+                    result.success("Flyy SDK Closed");
                 }
             });
             return true;
