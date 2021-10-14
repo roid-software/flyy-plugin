@@ -312,11 +312,18 @@ static NSString* sdkClosedCommand = nil;
 
 - (void)handleForeGroundNotification: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+    NSString* remoteMessageString = [command.arguments objectAtIndex:0];
     
     flyy = [Flyy sharedFlyyInstance];
     
-    if (userInfo != nil && userInfo.length > 0) {
+    if (remoteMessageString != nil && remoteMessageString.length > 0) {
+        NSError * err;
+        NSData *data = [remoteMessageString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary * userInfo;
+        if(data!=nil){
+         userInfo = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+        }
+        
         [flyy handleBackgroundNotificationWithUserInfo: userInfo];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
@@ -328,11 +335,17 @@ static NSString* sdkClosedCommand = nil;
 
 - (void)handleBackGroundNotification: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+    NSString* remoteMessageString = [command.arguments objectAtIndex:0];
     
     flyy = [Flyy sharedFlyyInstance];
     
-    if (userInfo != nil && userInfo.length > 0) {
+    if (remoteMessageString != nil && remoteMessageString.length > 0) {
+        NSError * err;
+        NSData *data = [remoteMessageString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary * userInfo;
+        if(data!=nil){
+         userInfo = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+        }
         [flyy handleBackgroundNotificationWithUserInfo: userInfo];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
