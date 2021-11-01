@@ -1,4 +1,3 @@
-cordova.define("cordova-plugin-theflyy.FlyyPlugin", function(require, exports, module) {
     var exec = require('cordova/exec');
     
     exports.initSdk = function (partner_token, enviroment, success, error) {
@@ -118,4 +117,3 @@ cordova.define("cordova-plugin-theflyy.FlyyPlugin", function(require, exports, m
     exports.sendFCMTokenToServer = function (remoteMessage,success, error) {
         exec(success, error, 'FlyyPlugin', 'sendFCMTokenToServer', [remoteMessage]);
     };
-});
