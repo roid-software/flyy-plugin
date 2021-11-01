@@ -36,7 +36,7 @@ static NSString* sdkClosedCommand = nil;
     
     if (partnerToken != nil && partnerToken.length > 0 && environment != nil && environment.length > 0) {
         if ([environment  isEqual: @"stage"]) {
-            [flyy initSDKWithPartnerToken:partnerToken environment: [flyy production]];
+            [flyy initSDKWithPartnerToken:partnerToken environment: [flyy staging]];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
         } else if ([environment  isEqual: @"production"]) {
             [flyy initSDKWithPartnerToken:partnerToken environment: [flyy production]];
