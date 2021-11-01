@@ -35,6 +35,7 @@ import theflyy.com.flyy.helpers.FlyyUIEventsListener;
 import theflyy.com.flyy.model.FlyyUIEvent;
 import theflyy.com.flyy.helpers.FlyyFetchOffersCountListener;
 import theflyy.com.flyy.model.FlyyOffersCount;
+import theflyy.com.flyy.helpers.FlyySDKClosedListener;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -429,9 +430,9 @@ public class FlyyPlugin extends CordovaPlugin {
             Flyy.getFlyySDKClosed(new FlyySDKClosedListener() {
                 @Override
                 public void onSDKClosed() {
-                    if (result != null) {
-                        Flyy.getFlyySDKClosed(null);
+                    if (callbackContext != null) {
                         callbackContext.success("");
+                        Flyy.getFlyySDKClosed(null);
                     }
                 }
             });

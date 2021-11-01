@@ -76,12 +76,11 @@ static NSString* sdkClosedCommand = nil;
 - (void)setNewUser: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* extUid = [command.arguments objectAtIndex:0];
-    NSString* segmentId = [command.arguments objectAtIndex:1];
     
     flyy = [Flyy sharedFlyyInstance];
     
     if (extUid != nil && extUid.length > 0) {
-        [flyy setNewUserWithExternalUserId:extUid segmentId:segmentId];
+        [flyy setNewUserWithExternalUserId:extUid];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];

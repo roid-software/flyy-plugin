@@ -153,10 +153,9 @@ import FlyyFramework
         )
         
         let extUid = (command.arguments[0] as? NSObject)?.value(forKey: "ext_uid") as? String
-        let segmentId = (command.arguments[1] as? NSObject)?.value(forKey: "segmentId") as? String
         
         if extUid != nil && !extUid!.isEmpty {
-            Flyy.sharedInstance.setNewUser(externalUserId: extUid!, segmentId: segmentId!)
+            Flyy.sharedInstance.setNewUser(externalUserId: extUid!)
             pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_OK,
                 messageAs: "true"
