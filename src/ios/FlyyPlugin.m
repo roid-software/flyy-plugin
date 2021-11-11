@@ -182,7 +182,7 @@ static NSString* sdkClosedCommand = nil;
     
     flyy = [Flyy sharedFlyyInstance];
     
-    if (key != nil && key.length > 0 && value != nil && value.length > 0) {
+    if (key != nil && key.length > 0 && value != nil) {
         [flyy sendEventWithKey:key value:value onComplete: ^(BOOL success) {
             if(success) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
@@ -207,7 +207,7 @@ static NSString* sdkClosedCommand = nil;
     
     flyy = [Flyy sharedFlyyInstance];
     
-    if (key != nil && key.length > 0 && value != nil && value.length > 0) {
+    if (key != nil && key.length > 0 && value != nil) {
         [flyy sendEventWithKey:key value:value onComplete: ^(BOOL success) {
             if(success) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
