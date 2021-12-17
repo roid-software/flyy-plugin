@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
 import android.content.Intent;
@@ -17,7 +18,7 @@ import theflyy.com.flyy.views.FlyyOffersActivity;
 import theflyy.com.flyy.Flyy;
 import theflyy.com.flyy.helpers.FlyyUtility;
 
-import com.google.firebase.messaging.RemoteMessage;
+//import com.google.firebase.messaging.RemoteMessage;
 
 import theflyy.com.flyy.helpers.FlyyNotificationHandler;
 import theflyy.com.flyy.helpers.FlyyReferralDataFetchedListener;

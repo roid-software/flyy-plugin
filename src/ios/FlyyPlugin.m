@@ -12,6 +12,7 @@
 
 static NSString* sdkClosedCommand = nil;
 
+//set package name
 - (void)setAppPackage: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* packageName = [command.arguments objectAtIndex:0];
@@ -27,6 +28,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//init sdk
 - (void)initSDK: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* partnerToken = [command.arguments objectAtIndex:0];
@@ -51,6 +53,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//set user
 - (void)setUser: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* extUid = [command.arguments objectAtIndex:0];
@@ -73,6 +76,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//set new user
 - (void)setNewUser: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* extUid = [command.arguments objectAtIndex:0];
@@ -88,6 +92,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//ser user name
 - (void)setUsername: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* userName = [command.arguments objectAtIndex:0];
@@ -103,6 +108,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//open offers page
 - (void)openOfferActivity: (CDVInvokedUrlCommand *) command {
     sdkClosedCommand = command.callbackId;
     CDVPluginResult* pluginResult = nil;
@@ -125,6 +131,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//open rewards page
 - (void)openRewardsActivity: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* segmentId = [command.arguments objectAtIndex:0];
@@ -142,6 +149,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//open wallet page
 - (void)openWalletActivity: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* segmentId = [command.arguments objectAtIndex:0];
@@ -159,6 +167,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//open gift cards page
 - (void)openGiftCardsActivity: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* segmentId = [command.arguments objectAtIndex:0];
@@ -167,7 +176,13 @@ static NSString* sdkClosedCommand = nil;
     
     if (segmentId != nil && segmentId.length > 0) {
         [flyy setSegmentIdWithSegementId:segmentId];
-        [flyy openGiftCardsPage];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                
+                [self->flyy openGiftCardPage];
+            });
+        });
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
@@ -175,6 +190,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//send event
 - (void)trackEvent: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* key = [command.arguments objectAtIndex:0];
@@ -200,6 +216,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//send event with json
 - (void)trackEventJson: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* key = [command.arguments objectAtIndex:0];
@@ -238,7 +255,7 @@ static NSString* sdkClosedCommand = nil;
     NSString* source = [command.arguments objectAtIndex:1];
 }
 
-//TODO
+//set contact number
 - (void)setContactNumber: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* contactNumber = [command.arguments objectAtIndex:0];
@@ -259,16 +276,24 @@ static NSString* sdkClosedCommand = nil;
     CDVPluginResult* pluginResult = nil;
 }
 
+//open referral history page
 - (void)startReferralHistoryActivity: (CDVInvokedUrlCommand *) command {
-    __block CDVPluginResult* pluginResult = nil;
+    CDVPluginResult* pluginResult = nil;
     
     flyy = [Flyy sharedFlyyInstance];
-    [flyy openReferralHistoryPage];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            
+            [self->flyy openReferralHistoryPage];
+        });
+    });
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 
+//open tournament list page
 - (void)startTournamentListActivity: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     
@@ -279,6 +304,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//set rewards grid span
 - (void)setRewardGridSpanCount: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* rewardsGridCount = [command.arguments objectAtIndex:0];
@@ -294,7 +320,7 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-//Todo
+//open deep link
 - (void)openDeeplink: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* deepLink = [command.arguments objectAtIndex:0];
@@ -311,6 +337,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//handle foreground notifi
 - (void)handleForeGroundNotification: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* remoteMessageString = [command.arguments objectAtIndex:0];
@@ -334,6 +361,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//handle backgroun notifi
 - (void)handleBackGroundNotification: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* remoteMessageString = [command.arguments objectAtIndex:0];
@@ -356,19 +384,62 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//open invite and earn page
 - (void)navigateToInviteAndEarnActivity: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     
+    NSString* offerIdStr = [command.arguments objectAtIndex:0];
+    NSInteger offerId = [offerIdStr integerValue];
+    
+    flyy = [Flyy sharedFlyyInstance];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            
+            [self->flyy openInviteAndEarnPageWithOfferId:offerId];
+        });
+    });
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//open custom invite and earn page
 - (void)navigateToCustomInviteAndEanActivity: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
-    NSString* userInfo = [command.arguments objectAtIndex:0];
+    NSString* offerIdStr = [command.arguments objectAtIndex:0];
+    NSInteger offerId = [offerIdStr integerValue];
+    NSString* headerColor = [command.arguments objectAtIndex:1];
     
-    //    flyy = [Flyy sharedFlyyInstance];
-    //    [flyy openTournamentsListPage];
-    //    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
-    //    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    flyy = [Flyy sharedFlyyInstance];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            
+            [self->flyy openFlyyCustomInviteAndEarnVCWithOfferId:offerId headerColor:headerColor];
+        });
+    });
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)navigateToChallengeDetailActivity: (CDVInvokedUrlCommand *) command {
+    __block CDVPluginResult* pluginResult = nil;
+    
+    NSString* offerIdStr = [command.arguments objectAtIndex:0];
+    NSInteger offerId = [offerIdStr integerValue];
+    
+    flyy = [Flyy sharedFlyyInstance];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            
+            [self->flyy openFlyyChallengesPageWithOfferId:offerId];
+        });
+    });
+    
 }
 
 - (void)navigateToBonanzaActivity: (CDVInvokedUrlCommand *) command {
@@ -376,6 +447,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//set theme colors
 - (void)setThemeColor: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* colorPrimary = [command.arguments objectAtIndex:0];
@@ -392,9 +464,11 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//get share data
 - (void)getShareData: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
-    NSString* offerId = [command.arguments objectAtIndex:0];
+    NSString* offerIdStr = [command.arguments objectAtIndex:0];
+    NSInteger offerId = [offerIdStr integerValue];
     
     flyy = [Flyy sharedFlyyInstance];
     
@@ -421,6 +495,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//get referral count
 - (void)getReferralCount: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     
@@ -439,6 +514,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//get scratcg card count
 - (void)getScratchCardCount: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     flyy = [Flyy sharedFlyyInstance];
@@ -466,6 +542,7 @@ static NSString* sdkClosedCommand = nil;
     }];
 }
 
+//get previous board winners
 - (void)getPreviousLeaderboardWinners: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* tag = [command.arguments objectAtIndex:0];
@@ -500,6 +577,7 @@ static NSString* sdkClosedCommand = nil;
     }
 }
 
+//get leaderboard participants
 - (void)getLeaderboardParticipants: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* tag = [command.arguments objectAtIndex:0];
@@ -507,7 +585,7 @@ static NSString* sdkClosedCommand = nil;
     flyy = [Flyy sharedFlyyInstance];
     
     if (tag != nil && tag.length > 0) {
-        [flyy getPreviousLeaderboardWinnersWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
+        [flyy getLeaderboardParticipantsWithTag:tag onComplete:^(BOOL success, NSString* message, NSInteger participantsCount, NSString* winners, NSString* previousWinners) {
             if (success) {
                 NSDictionary* jsonObject = @{ @"success": @true,
                                               @"message": message,
@@ -535,6 +613,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//get wallet balance
 - (void)getWalletBalance: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* walletLabel = [command.arguments objectAtIndex:0];
@@ -567,6 +646,7 @@ static NSString* sdkClosedCommand = nil;
     }
 }
 
+//get referrer details data
 - (void)getReferrerDetails: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     
@@ -594,6 +674,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//get  offers count
 - (void)getOffersCount: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     
@@ -623,6 +704,7 @@ static NSString* sdkClosedCommand = nil;
     
 }
 
+//send fcm token to server
 - (void)sendFCMTokenToServer: (CDVInvokedUrlCommand *) command {
     CDVPluginResult* pluginResult = nil;
     NSString* fcmToken = [command.arguments objectAtIndex:0];
