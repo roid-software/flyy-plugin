@@ -117,3 +117,36 @@
     exports.sendFCMTokenToServer = function (remoteMessage,success, error) {
         exec(success, error, 'FlyyPlugin', 'sendFCMTokenToServer', [remoteMessage]);
     };
+    exports.handleDeeplink = function (deeplink,success, error) {
+        exec(success, error, 'FlyyPlugin', 'handleDeeplink', [deeplink]);
+    };
+    exports.updateUsername = function (user_name,success, error) {
+        exec(success, error, 'FlyyPlugin', 'updateUsername', [user_name]);
+    };
+    exports.loginUser = function (ext_uid, user_name,success, error) {
+        exec(success, error, 'FlyyPlugin', 'loginUser', [ext_uid, user_name]);
+    };
+    exports.loginUserWithCallback = function (ext_uid, user_name,success, error) {
+        exec(success, error, 'FlyyPlugin', 'loginUserWithCallback', [ext_uid, user_name]);
+    };
+    exports.initWithReferrerReceivedCallback = function (partner_id, enviroment,success, error) {
+        exec(success, error, 'FlyyPlugin', 'initWithReferrerReceivedCallback', [partner_id, enviroment]);
+    };
+    exports.getTotalSCCount = function (success, error) {
+        exec(success, error, 'FlyyPlugin', 'getTotalSCCount', []);
+    };
+    exports.getScratchedSCCount = function (success, error) {
+        exec(success, error, 'FlyyPlugin', 'getScratchedSCCount', []);
+    };
+    exports.getUnscratchedSCCount = function (success, error) {
+        exec(success, error, 'FlyyPlugin', 'getUnscratchedSCCount', []);
+    };
+    exports.getLockedSCCount = function (success, error) {
+        exec(success, error, 'FlyyPlugin', 'getLockedSCCount', []);
+    };
+    exports.setBaseFlyyDomain = function (domain,success, error) {
+        exec(success, error, 'FlyyPlugin', 'setBaseFlyyDomain', [domain]);
+    };
+    exports.setBaseStageFlyyDomain = function (domain,success, error) {
+        exec(success, error, 'FlyyPlugin', 'setBaseStageFlyyDomain', [domain]);
+    };

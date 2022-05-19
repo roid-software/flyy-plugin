@@ -37,6 +37,8 @@ import theflyy.com.flyy.model.FlyyUIEvent;
 import theflyy.com.flyy.helpers.FlyyFetchOffersCountListener;
 import theflyy.com.flyy.model.FlyyOffersCount;
 import theflyy.com.flyy.helpers.FlyySDKClosedListener;
+import theflyy.com.flyy.helpers.OnFlyyLoginUserListener;
+import theflyy.com.flyy.helpers.FlyyReferrerReceivedListener;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -438,6 +440,116 @@ public class FlyyPlugin extends CordovaPlugin {
                 }
             });
             return true;
+        } else if (action.equals("handleDeeplink")) {
+            String deeplink = args.getString(0);
+            if (deeplink != null && deeplink.length() > 0) {
+                Flyy.handleDeeplink(context, deeplink);
+            } else {
+                callbackContext.error("Please provide deeplink");
+            }
+            return true;
+        } else if (action.equals("updateUsername")) {
+            String user_name = args.getString(0);
+            if (user_name != null && user_name.length() > 0) {
+                Flyy.updateUsername(user_name);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Please provide user_name");
+            }
+            return true;
+        } else if (action.equals("loginUser")) {
+            String ext_uid = args.getString(0);
+            String user_name = args.getString(1);
+            if (ext_uid != null && ext_uid.length() > 0 && user_name != null && user_name.length() > 0) {
+                Flyy.loginUser(ext_uid, user_name, null);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Please provide ext_uid and user_name");
+            }
+            return true;
+        } else if (action.equals("loginUserWithCallback")) {
+            String ext_uid = args.getString(0);
+            String user_name = args.getString(1);
+            if (ext_uid != null && ext_uid.length() > 0 && user_name != null && user_name.length() > 0) {
+                Flyy.loginUser(ext_uid, user_name, new OnFlyyLoginUserListener() {
+                    @Override
+                    public void onLoginSuccess(String ext_uid, String user_name) {
+                        try {
+                            JSONObject object = new JSONObject();
+                            object.put("ext_uid", ext_uid);
+                            object.put("user_name", user_name);
+                            callbackContext.success(new Gson().toJson(object));
+                        } catch (Exception e){
+                            callbackContext.error(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onLoginFailure(String message) {
+                        callbackContext.error(message);
+                    }
+                });
+            } else {
+                callbackContext.error("Please provide ext_uid and user_name");
+            }
+            return true;
+        } else if (action.equals("initWithReferrerReceivedCallback")) {
+            String partner_id = args.getString(0);
+            String enviroment = args.getString(1);
+            if (partner_id != null && partner_id.length() > 0 && enviroment != null && enviroment.length() > 0) {
+                if (enviroment.equalsIgnoreCase("stage") || enviroment.equalsIgnoreCase("production")) {
+                    int env = enviroment.equalsIgnoreCase("stage") ? Flyy.STAGE : Flyy.PRODUCTION;
+                    callbackContext.success("true");
+                    Flyy.initWithReferrerReceivedCallback(context, partner_id, env, new FlyyReferrerReceivedListener() {
+                        @Override
+                        public void onReferrerReceived(boolean isFromFlyy, String referrerData) {
+                            try {
+                                JSONObject object = new JSONObject();
+                                object.put("isFromFlyy", isFromFlyy);
+                                object.put("referrerData", referrerData);
+                                callbackContext.success(new Gson().toJson(object));
+                            } catch (Exception e){
+                                callbackContext.error(e.getMessage());
+                            }
+                        }
+                    });
+                } else {
+                    callbackContext.error("Expected enviroment variable as either 'stage' or 'production'.");
+                }
+            } else {
+                callbackContext.error("Please provide partner_id and enviroment");
+            }
+            return true;
+        } else if (action.equals("getTotalSCCount")) {
+            int count = Flyy.getTotalSCCount(context);
+            callbackContext.success(count);
+            return true;
+        } else if (action.equals("getScratchedSCCount")) {
+            int count = Flyy.getScratchedSCCount(context);
+            callbackContext.success(count);
+            return true;
+        } else if (action.equals("getUnscratchedSCCount")) {
+            int count = Flyy.getUnscratchedSCCount(context);
+            callbackContext.success(count);
+            return true;
+        } else if (action.equals("getLockedSCCount")) {
+            int count = Flyy.getLockedSCCount(context);
+            callbackContext.success(count);
+            return true;
+        } else if (action.equals("setBaseFlyyDomain")) {
+            String domain = args.getString(0);
+            if (domain != null && domain.length() > 0) {
+                Flyy.setBaseFlyyDomain(domain);
+            } else {
+                callbackContext.error("Please provide domain");
+            }
+        } else if (action.equals("setBaseStageFlyyDomain")) {
+            String domain = args.getString(0);
+            if (domain != null && domain.length() > 0) {
+                Flyy.setBaseStageFlyyDomain(domain);
+            } else {
+                callbackContext.error("Please provide domain");
+            }
         }
 
 
