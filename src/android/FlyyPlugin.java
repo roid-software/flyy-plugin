@@ -39,6 +39,7 @@ import theflyy.com.flyy.model.FlyyOffersCount;
 import theflyy.com.flyy.helpers.FlyySDKClosedListener;
 import theflyy.com.flyy.helpers.OnFlyyLoginUserListener;
 import theflyy.com.flyy.helpers.FlyyReferrerReceivedListener;
+import java.util.HashMap;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -252,8 +253,8 @@ public class FlyyPlugin extends CordovaPlugin {
 
             return true;
         } else if (action.equals("handleNotification")) {
-            RemoteMessage remoteMessage = (RemoteMessage) args.get(0);
-            FlyyNotificationHandler.handleNotification(context, remoteMessage, null, null);
+            HashMap<String, String> remoteMessage = new Gson().fromJson(args.getString(0), HashMap.class);
+            FlyyNotificationHandler.handleCrossPlatformNotification(context, remoteMessage, null, null);
             callbackContext.success("true");
         } else if (action.equals("navigateToInviteAndEarnActivity")) {
             String offerId = args.getString(0);
@@ -499,7 +500,6 @@ public class FlyyPlugin extends CordovaPlugin {
             if (partner_id != null && partner_id.length() > 0 && enviroment != null && enviroment.length() > 0) {
                 if (enviroment.equalsIgnoreCase("stage") || enviroment.equalsIgnoreCase("production")) {
                     int env = enviroment.equalsIgnoreCase("stage") ? Flyy.STAGE : Flyy.PRODUCTION;
-                    callbackContext.success("true");
                     Flyy.initWithReferrerReceivedCallback(context, partner_id, env, new FlyyReferrerReceivedListener() {
                         @Override
                         public void onReferrerReceived(boolean isFromFlyy, String referrerData) {

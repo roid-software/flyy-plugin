@@ -53,6 +53,49 @@ static NSString* sdkClosedCommand = nil;
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+//initWithReferrerReceivedCallback sdk
+- (void)initWithReferrerReceivedCallback: (CDVInvokedUrlCommand *) command {
+    CDVPluginResult* pluginResult = nil;
+    NSString* partnerToken = [command.arguments objectAtIndex:0];
+    NSString* environment = [command.arguments objectAtIndex:1];
+    
+    flyy = [Flyy sharedFlyyInstance];
+    
+    if (partnerToken != nil && partnerToken.length > 0 && environment != nil && environment.length > 0) {
+        if ([environment isEqual: @"stage"]) {
+             [flyy initSDKWithPartnerToken:partnerToken environment: [flyy  staging] onComplete: ^(BOOL success, NSString * referralData) {
+              if(success) 
+              {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+              }
+              else
+              {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+              }
+             }];
+        } 
+        else if ([environment isEqual: @"production"]) {
+            [flyy initSDKWithPartnerToken:partnerToken environment: [flyy  production] onComplete: ^(BOOL success, NSString * referralData) {
+              if(success) 
+              {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+              }
+              else
+              {
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+              }
+             }];
+        }
+         else {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected enviroment variable as either 'stage' or 'production'."];
+            
+        }
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 //set user
 - (void)setUser: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
