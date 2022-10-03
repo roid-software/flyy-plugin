@@ -65,36 +65,24 @@ static NSString* sdkClosedCommand = nil;
 
         if ([environment isEqual: @"stage"]) {
              [flyy initSDKWithPartnerToken:partnerToken environment: [flyy  staging] onComplete: ^(BOOL success, NSString *referralData) {
-              if(success) 
-              {
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
-              }
-              else
-              {
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
-              }
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
              }];
         } 
         else if ([environment isEqual: @"production"]) {
             [flyy initSDKWithPartnerToken:partnerToken environment: [flyy  production] onComplete: ^(BOOL success, NSString *referralData) {
-              if(success) 
-              {
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
-              }
-              else
-              {
-                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
-              }
+               pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:referralData];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
              }];
         }
          else {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected enviroment variable as either 'stage' or 'production'."];
-            
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 //set user
