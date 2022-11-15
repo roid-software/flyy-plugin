@@ -89,20 +89,34 @@ static NSString* sdkClosedCommand = nil;
 - (void)setUser: (CDVInvokedUrlCommand *) command {
     __block CDVPluginResult* pluginResult = nil;
     NSString* extUid = [command.arguments objectAtIndex:0];
-    NSString* segmentId = [command.arguments objectAtIndex:1];
-    
+    BOOL includeReferralCode = [command.arguments objectAtIndex:1];
+    NSString* segmentId = [command.arguments objectAtIndex:2];
     flyy = [Flyy sharedFlyyInstance];
     
-    if (extUid != nil && extUid.length > 0) {
-        [flyy setUserWithExternalUserId:extUid segmentId:segmentId onComplete: ^(BOOL success) {
+    if (extUid != nil && extUid.length > 0) 
+    {
+        if (includeReferralCode)
+        {
+            [flyy setUserWithExternalUserId:extUid includeReferralCode:includeReferralCode onComplete: ^(BOOL success) {
             if(success) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
             } else {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"false"];
             }
-        }];
-        
-    } else {
+           }];
+        }
+        else
+        {
+            [flyy setUserWithExternalUserId:extUid segmentId:segmentId onComplete: ^(BOOL success) {
+            if(success) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+            } else {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"false"];
+            }
+            }];
+        }
+    } 
+    else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected two non-empty string argument."];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
