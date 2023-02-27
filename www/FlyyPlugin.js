@@ -150,3 +150,15 @@
     exports.setBaseStageFlyyDomain = function (domain,success, error) {
         exec(success, error, 'FlyyPlugin', 'setBaseStageFlyyDomain', [domain]);
     };
+    exports.startReferAndEarnActivity = function (success, error) {
+        exec(success, error, 'FlyyPlugin', 'startReferAndEarnActivity', []);
+    };
+    exports.startCheckInActivity = function (segmentId,success, error) {
+        exec(success, error, 'FlyyPlugin', 'startCheckInActivity', [segmentId]);
+    };
+    exports.startRetailerIncentiveApp = function (partnerId,userToken,themeColor,success, error) {
+        exec(success, error, 'FlyyPlugin', 'startRetailerIncentiveApp', [partnerId,userToken,themeColor]);
+    };
+    exports.setCustomFontName = function (regularFont,mediumFont,boldFont,success, error) {
+        exec(success, error, 'FlyyPlugin', 'setCustomFontName', [regularFont,mediumFont,boldFont]);
+    };

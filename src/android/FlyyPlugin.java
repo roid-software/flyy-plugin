@@ -563,6 +563,37 @@ public class FlyyPlugin extends CordovaPlugin {
             } else {
                 callbackContext.error("Please provide domain");
             }
+        } else if (action.equals("startReferAndEarnActivity")) {
+            String[] data =  {"personal_loan_offers","credit_card_offers"};
+                Flyy.navigateToReferAndEarnActivity(context, data);
+                callbackContext.success("true");
+            return true;
+
+        }else if (action.equals("startCheckInActivity")) {
+                Flyy.navigateToCheckInActivity(context);
+                callbackContext.success("true");
+            return true;
+
+        }else if (action.equals("startRetailerIncentiveApp")) {
+            String partnerId = args.getString(0);
+            String userToken = args.getString(1);
+            String themeColor = args.getString(2);
+                Flyy.navigateToRetailerIncentiveApp(partnerId,userToken,themeColor);
+                callbackContext.success("true");
+            return true;
+
+        }else if (action.equals("setCustomFontName")) {
+            String regularFont = args.getString(0);
+            String mediumFont = args.getString(1);
+            String boldFont = args.getString(2);
+            if (regularFont != null && mediumFont != null && boldFont != null) {
+                Flyy.setCustomFontName(regularFont,mediumFont,boldFont);
+                callbackContext.success("true");
+            } else {
+                callbackContext.error("Expected one non-empty string argument.");
+            }
+            
+            return true;
         }
 
 
