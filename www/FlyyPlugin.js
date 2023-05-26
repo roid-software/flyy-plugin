@@ -1,41 +1,41 @@
     var exec = require('cordova/exec');
-    
+
     exports.initSdk = function (partner_token, enviroment, success, error) {
         exec(success, error, 'FlyyPlugin', 'initSDK', [partner_token, enviroment]);
     };
-    
+
     exports.startOfferActivity = function (segmentId,success, error) {
         exec(success, error, 'FlyyPlugin', 'openOfferActivity', [segmentId]);
     };
-    
+
     exports.startRewardsActivity = function (segmentId,success, error) {
         exec(success, error, 'FlyyPlugin', 'openRewardsActivity', [segmentId]);
     };
-    
+
     exports.startWalletActivity = function (segmentId,success, error) {
         exec(success, error, 'FlyyPlugin', 'openWalletActivity', [segmentId]);
     };
-    
+
     exports.startGiftCardsActivity = function (segmentId,success, error) {
         exec(success, error, 'FlyyPlugin', 'openGiftCardsActivity', [segmentId]);
     };
-    
+
     exports.setUser = function (ext_uid,includeReferralCode,segmentId, success, error) {
         exec(success, error, 'FlyyPlugin', 'setUser', [ext_uid,includeReferralCode,segmentId]);
     };
-    
+
     exports.setNewUser = function (ext_uid, success, error) {
         exec(success, error, 'FlyyPlugin', 'setNewUser', [ext_uid]);
     };
-    
+
     exports.setUsername = function (user_name, success, error) {
         exec(success, error, 'FlyyPlugin', 'setUsername', [user_name]);
     };
-    
+
     exports.trackEvent = function (key, value, success, error) {
         exec(success, error, 'FlyyPlugin', 'trackEvent', [key, value]);
     };
-    
+
     exports.trackEventJson = function (key, jsonObj, success, error) {
         exec(success, error, 'FlyyPlugin', 'trackEvent', [key, JSON.stringify(jsonObj)]);
     };
@@ -156,8 +156,8 @@
     exports.startCheckInActivity = function (segmentId,success, error) {
         exec(success, error, 'FlyyPlugin', 'startCheckInActivity', [segmentId]);
     };
-    exports.startRetailerIncentiveApp = function (partnerId,userToken,themeColor,success, error) {
-        exec(success, error, 'FlyyPlugin', 'startRetailerIncentiveApp', [partnerId,userToken,themeColor]);
+    exports.startRetailerIncentiveApp = function (partnerId,userToken,themeColor,url,success, error) {
+        exec(success, error, 'FlyyPlugin', 'startRetailerIncentiveApp', [partnerId,userToken,themeColor,url]);
     };
     exports.setCustomFontName = function (regularFont,mediumFont,boldFont,success, error) {
         exec(success, error, 'FlyyPlugin', 'setCustomFontName', [regularFont,mediumFont,boldFont]);

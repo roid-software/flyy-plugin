@@ -110,8 +110,8 @@ public class FlyyPlugin extends CordovaPlugin {
             // }
 
             return true;
-        } 
-        else if (action.equals("setUser")) 
+        }
+        else if (action.equals("setUser"))
         {
             String ext_uid = args.getString(0);
             boolean includeReferralCode = args.getBoolean(1);
@@ -121,14 +121,14 @@ public class FlyyPlugin extends CordovaPlugin {
                 if (includeReferralCode)
                 {
                     Flyy.setUser(ext_uid, includeReferralCode);
-                    callbackContext.success("true"); 
+                    callbackContext.success("true");
                 }
                 else
                 {
                     Flyy.setUser(ext_uid, segmentId);
                     callbackContext.success("true");
                 }
-            } 
+            }
             else
             {
                 callbackContext.error("Expected one non-empty string argument.");
@@ -578,7 +578,8 @@ public class FlyyPlugin extends CordovaPlugin {
             String partnerId = args.getString(0);
             String userToken = args.getString(1);
             String themeColor = args.getString(2);
-                Flyy.navigateToRetailerIncentiveApp(partnerId,userToken,themeColor);
+            String url = args.getString(3);
+                Flyy.navigateToRetailerIncentiveApp(partnerId,userToken,themeColor,url);
                 callbackContext.success("true");
             return true;
 
@@ -592,7 +593,7 @@ public class FlyyPlugin extends CordovaPlugin {
             } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-            
+
             return true;
         }
 
