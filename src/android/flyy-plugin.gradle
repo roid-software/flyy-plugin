@@ -1,11 +1,11 @@
 repositories {
-    maven { 
+    maven {
     	url "https://jitpack.io"
-    	credentials { username 'jp_9lured1djkqj83p7vaqhes4img' } 
+    	credentials { username 'jp_9lured1djkqj83p7vaqhes4img' }
     }
 }
 
 dependencies {
-    implementation 'com.github.roid-software:flyy-sdk:1.4.54.74'
+    implementation 'com.github.roid-software:flyy-sdk:1.4.54.82'
     implementation 'com.google.code.gson:gson:2.8.6'
 }
