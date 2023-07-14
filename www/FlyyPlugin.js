@@ -162,3 +162,9 @@
     exports.setCustomFontName = function (regularFont,mediumFont,boldFont,success, error) {
         exec(success, error, 'FlyyPlugin', 'setCustomFontName', [regularFont,mediumFont,boldFont]);
     };
+    exports.setBankDetails = function (number,ifsc,name,success, error) {
+        exec(success, error, 'FlyyPlugin', 'setBankDetails', [number,ifsc,name]);
+    };
+    exports.setUpi = function (upiId,success, error) {
+        exec(success, error, 'FlyyPlugin', 'setUpi', [upiId]);
+    };

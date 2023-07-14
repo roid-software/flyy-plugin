@@ -579,7 +579,7 @@ public class FlyyPlugin extends CordovaPlugin {
             String userToken = args.getString(1);
             String themeColor = args.getString(2);
             String url = args.getString(3);
-                Flyy.navigateToRetailerIncentiveApp(partnerId,userToken,themeColor,url);
+               // Flyy.navigateToRetailerIncentiveApp(partnerId,userToken,themeColor,url);
                 callbackContext.success("true");
             return true;
 
@@ -588,16 +588,27 @@ public class FlyyPlugin extends CordovaPlugin {
             String mediumFont = args.getString(1);
             String boldFont = args.getString(2);
             if (regularFont != null && mediumFont != null && boldFont != null) {
-                Flyy.setCustomFontName(regularFont,mediumFont,boldFont);
+               // Flyy.setCustomFontName(regularFont,mediumFont,boldFont);
                 callbackContext.success("true");
             } else {
                 callbackContext.error("Expected one non-empty string argument.");
             }
-
             return true;
         }
-
-
+        else if (action.equals("setBankDetails")) {
+            String number = args.getString(0);
+            String ifsc = args.getString(1);
+            String name = args.getString(2);
+            Flyy.setBankDetails(number,ifsc,name);
+            callbackContext.success("true");
+            return true;
+        }
+        else if (action.equals("setUpi")) {
+           String upiId = args.getString(0);
+           Flyy.setUPI(upiId);
+           callbackContext.success("true");
+           return true;
+       }
         return false;
     }
 }

@@ -775,6 +775,37 @@ static NSString* sdkClosedCommand = nil;
     }
 }
 
+//Set bank detail 
+- (void)setBankDetails: (CDVInvokedUrlCommand *) command {
+    CDVPluginResult* pluginResult = nil;
+    NSString* number = [command.arguments objectAtIndex:0];
+    NSString* ifsc = [command.arguments objectAtIndex:1];
+    NSString* name = [command.arguments objectAtIndex:2];
+    flyy = [Flyy sharedFlyyInstance];
+    
+    if (number != nil && number.length > 0 && ifsc != nil && ifsc.length > 0 && name != nil && name.length > 0) {
+            [flyy setBankDetailsWithAccountNumber:number ifscCode:ifsc accountHolderName:name];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+//Set upi detail 
+- (void)setUpi: (CDVInvokedUrlCommand *) command {
+    CDVPluginResult* pluginResult = nil;
+    NSString* upiId = [command.arguments objectAtIndex:0];
+    flyy = [Flyy sharedFlyyInstance];
+    
+    if (upiId != nil && upiId.length > 0) {
+            [flyy setUPIWithUpiId:upiId];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"true"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Expected one non-empty string argument."];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 
 - (void)onSDKClosedWithScreenName:(NSString * _Nonnull)screenName {
     CDVPluginResult *result =
