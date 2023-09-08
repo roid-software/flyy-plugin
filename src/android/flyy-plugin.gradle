@@ -1,7 +1,7 @@
 repositories {
     maven {
     	url "https://jitpack.io"
-    	credentials { username 'jp_9lured1djkqj83p7vaqhes4img' }
+    	credentials { username 'jp_8oggkp9la1q9aqbo9cp011ucaj' }
     }
 }
 
