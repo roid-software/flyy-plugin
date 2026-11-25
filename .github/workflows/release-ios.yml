@@ -30,7 +30,9 @@ permissions:
 
 jobs:
   release:
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    # GitHub-hosted on purpose: this repo is public, so npm publishes with provenance, and npm only
+    # accepts provenance from GitHub-hosted runners (Blacksmith = "self-hosted" -> E422).
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       IOS: ${{ inputs.flyy_framework_version }}
