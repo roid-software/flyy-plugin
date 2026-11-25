@@ -1,20 +1,30 @@
-# Release cordova-plugin-theflyy for a new FlyyFramework (iOS) version.
-# Run by hand (Actions -> Release (iOS SDK update)) or from flyy-ios-sdk's release workflow.
+# Release cordova-plugin-theflyy when a new FlyyFramework (Flyy iOS SDK) version is out.
 #
-# Pins FlyyFramework in plugin.xml, bumps the patch version (package.json + plugin.xml), publishes
-# to npm, then pushes "Releasing v<new>" + tag <new>.
+# Hourly, this checks the public SPM repo roid-software/flyy-ios-spm for a newer version tag than
+# the one pinned in plugin.xml. If there is one (or when run by hand), it:
+#   1. pins FlyyFramework in plugin.xml to the podspec the SDK release uploads next to its
+#      oldest-Xcode zip (pod 'FlyyFramework', :podspec => <cdn url>), so it doesn't need CocoaPods
+#      trunk (read-only from Dec 2, 2026). Versions released before that podspec existed fall back
+#      to the trunk spec (spec="<version>").
+#   2. bumps the patch version (package.json + plugin.xml), publishes to npm, pushes
+#      "Releasing v<new>" + tag <new>.
+# No cross-repo token: flyy-ios-sdk's release publishes the SPM tag, this repo picks it up.
 #
-# npm trusted publishing (OIDC), no token. One-time setup:
+# npm trusted publishing (OIDC), no token. One-time setup (done):
 #   npm trust github cordova-plugin-theflyy --file release-ios.yml --repo roid-software/flyy-plugin --allow-publish
+# Scheduled releases can be paused with the repo variable AUTO_RELEASE=false. GitHub disables
+# schedules in public repos after 60 days without commits; re-enable it in the Actions tab.
 
 name: Release (iOS SDK update)
 
 on:
+  schedule:
+    - cron: "37 * * * *"
   workflow_dispatch:
     inputs:
       flyy_framework_version:
-        description: FlyyFramework (iOS) version to pin, e.g. 1.3.157
-        required: true
+        description: FlyyFramework version (empty = latest on flyy-ios-spm)
+        required: false
       dry_run:
         description: Bump + npm publish --dry-run, no push
         type: boolean
@@ -30,33 +40,59 @@ permissions:
 
 jobs:
   release:
+    if: ${{ github.event_name != 'schedule' || vars.AUTO_RELEASE != 'false' }}
     # GitHub-hosted on purpose: this repo is public, so npm publishes with provenance, and npm only
     # accepts provenance from GitHub-hosted runners (Blacksmith = "self-hosted" -> E422).
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      IOS: ${{ inputs.flyy_framework_version }}
     steps:
       - uses: actions/checkout@v5
 
+      - name: Resolve FlyyFramework build
+        id: r
+        env:
+          WANT: ${{ inputs.flyy_framework_version }}
+        run: |
+          set -euo pipefail
+          SPM=roid-software/flyy-ios-spm
+          line=$(grep -oE '<pod name="FlyyFramework"[^>]*/>' plugin.xml)
+          CUR=$(echo "$line" | sed -nE 's#.*spec="([0-9.]+)".*#\1#p; s#.*/([0-9.]+)/FlyyFramework\.podspec\.json".*#\1#p' | head -1)
+          IOS=${WANT:-$(git ls-remote --tags --refs "https://github.com/$SPM" | sed 's|.*refs/tags/||' |
+            grep -E '^[0-9]+(\.[0-9]+)+$' | sort -V | tail -1)}
+          [[ "$IOS" =~ ^[0-9]+(\.[0-9]+)+$ ]] || { echo "::error::Bad FlyyFramework version: '$IOS'"; exit 1; }
+          if [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(printf '%s\n' "$IOS" "$CUR" | sort -V | tail -1)" = "$CUR" ]; then
+            echo "FlyyFramework $CUR is the latest; nothing to release"; echo go=false >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          pkg=$(curl -sfL "https://raw.githubusercontent.com/$SPM/$IOS/Package.swift") ||
+            { echo "::error::FlyyFramework $IOS is not on SPM (github.com/$SPM)"; exit 1; }
+          ZIP=$(echo "$pkg" | sed -nE 's/.*url: "([^"]+)".*/\1/p' | tail -1) # last = oldest-Xcode build
+          PODSPEC="${ZIP%/*}/FlyyFramework.podspec.json"
+          if curl -sfL "$PODSPEC" | grep -q "\"version\": *\"$IOS\""; then
+            POD="<pod name=\"FlyyFramework\" podspec=\"$PODSPEC\"/>"
+          elif curl -sf https://trunk.cocoapods.org/api/v1/pods/FlyyFramework | grep -q "\"name\":\"$IOS\""; then
+            POD="<pod name=\"FlyyFramework\" spec=\"$IOS\"/>" # released before the CDN podspec existed
+          else
+            echo "::error::No podspec for FlyyFramework $IOS at $PODSPEC or on CocoaPods trunk"; exit 1
+          fi
+          echo "FlyyFramework $CUR -> $IOS: $POD"
+          { echo go=true; echo "ios=$IOS"; echo "pod=$POD"; } >> "$GITHUB_OUTPUT"
+
       - uses: actions/setup-node@v5
+        if: steps.r.outputs.go == 'true'
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
 
-      - name: Check FlyyFramework is on CocoaPods
-        run: |
-          set -euo pipefail
-          [[ "$IOS" =~ ^[0-9]+(\.[0-9]+)+$ ]] || { echo "::error::Bad version: $IOS"; exit 1; }
-          curl -sf https://trunk.cocoapods.org/api/v1/pods/FlyyFramework | grep -q "\"name\":\"$IOS\"" ||
-            { echo "::error::FlyyFramework $IOS is not on CocoaPods trunk"; exit 1; }
-
       - name: Pin FlyyFramework and bump version
         id: bump
+        if: steps.r.outputs.go == 'true'
+        env:
+          IOS: ${{ steps.r.outputs.ios }}
+          POD: ${{ steps.r.outputs.pod }}
         run: |
           set -euo pipefail
-          sed -i -E "s/(<pod name=\"FlyyFramework\" spec=\")[^\"]+\"/\1$IOS\"/" plugin.xml
-          grep -q "<pod name=\"FlyyFramework\" spec=\"$IOS\"/>" plugin.xml || { echo "::error::FlyyFramework pin not found in plugin.xml"; exit 1; }
+          perl -pi -e 's#<pod name="FlyyFramework"[^>]*/>#$ENV{POD}#' plugin.xml
+          grep -qF "$POD" plugin.xml || { echo "::error::FlyyFramework pod line not found in plugin.xml"; exit 1; }
           NEW=$(npm version patch --no-git-tag-version)
           NEW=${NEW#v}
           sed -i -E "s/^( +version=\")[^\"]+(\">)/\1$NEW\2/" plugin.xml # <plugin ... version="x.y.z">
@@ -69,12 +105,13 @@ jobs:
           echo "cordova-plugin-theflyy $NEW -> FlyyFramework $IOS"
 
       - name: Publish to npm
+        if: steps.r.outputs.go == 'true'
         run: |
           npm install -g npm@latest # trusted publishing needs npm >= 11.5.1
           npm publish ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: Push release commit and tag
-        if: ${{ !inputs.dry_run }}
+        if: ${{ steps.r.outputs.go == 'true' && !inputs.dry_run }}
         env:
           NEW: ${{ steps.bump.outputs.version }}
         run: git push origin "HEAD:${GITHUB_REF_NAME}" "refs/tags/$NEW"
