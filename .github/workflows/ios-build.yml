@@ -10,6 +10,10 @@ on:
       - src/ios/**
       - .github/workflows/ios-build.yml
   workflow_dispatch:
+    inputs:
+      podspec_url:
+        description: Test a FlyyFramework podspec URL instead of plugin.xml's pin
+        required: false
 
 concurrency:
   group: ios-build-${{ github.ref }}
@@ -61,6 +65,8 @@ jobs:
           node-version: 22
 
       - name: Create test app with the plugin
+        env:
+          PODSPEC_URL: ${{ inputs.podspec_url }}
         run: |
           set -euo pipefail
           npm i -g cordova
@@ -69,6 +75,10 @@ jobs:
           # FlyyFramework needs iOS 15+; apps must set this too.
           perl -0pi -e 's|</widget>|    <preference name="deployment-target" value="15.0" />\n</widget>|' config.xml
           cordova platform add ios
+          if [ -n "$PODSPEC_URL" ]; then
+            perl -pi -e 's#<pod name="FlyyFramework"[^>]*/>#<pod name="FlyyFramework" podspec="$ENV{PODSPEC_URL}"/>#' ../plugin/plugin.xml
+            grep -n 'name="FlyyFramework"' ../plugin/plugin.xml
+          fi
           cordova plugin add ../plugin
           cordova prepare ios
           grep -A1 '^  - FlyyFramework' platforms/ios/Podfile.lock | head -1
