@@ -1,0 +1,82 @@
+# Builds a fresh Cordova app with this plugin on Xcode 26 and Xcode 27 to check that the pinned
+# FlyyFramework installs, links and compiles with both (Blacksmith macOS runners).
+
+name: iOS build (Xcode 26 / 27)
+
+on:
+  pull_request:
+    paths:
+      - plugin.xml
+      - src/ios/**
+      - .github/workflows/ios-build.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ios-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Xcode ${{ matrix.xcode }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { xcode: 26, pick: oldest, runner: blacksmith-12vcpu-macos-26 }
+          - { xcode: 27, pick: newest, runner: blacksmith-12vcpu-macos-27 }
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          path: plugin
+
+      # Same rule as flyy-ios-sdk's release: an Xcode is usable if it runs on this macOS and its
+      # iOS simulator platform is installed (Xcode 26+ refuses to build otherwise).
+      - name: Pick Xcode ${{ matrix.xcode }}
+        env:
+          MAJOR: ${{ matrix.xcode }}
+          PICK: ${{ matrix.pick }}
+        run: |
+          set -euo pipefail
+          host=$(sw_vers -productVersion)
+          rts=$(xcrun simctl list runtimes 2>/dev/null | grep -v unavailable | sed -nE 's/^iOS ([0-9]+\.[0-9]+).*/\1/p' | sort -u)
+          apps=$(ls -d /Applications/Xcode_"$MAJOR".*.app 2>/dev/null | grep -E '/Xcode_[0-9.]+\.app$' | sort -V || true)
+          [ "$PICK" = newest ] && apps=$(echo "$apps" | sort -rV)
+          pick=
+          for app in $apps; do
+            need=$(plutil -extract LSMinimumSystemVersion raw "$app/Contents/Info.plist")
+            [ "$(printf '%s\n' "$need" "$host" | sort -V | head -1)" = "$need" ] || { echo "skip $app: needs macOS $need"; continue; }
+            sdk=$(DEVELOPER_DIR="$app/Contents/Developer" xcrun --sdk iphonesimulator --show-sdk-version)
+            echo "$rts" | grep -qx "$sdk" || { echo "skip $app: iOS $sdk simulator platform not installed"; continue; }
+            pick=$app; break
+          done
+          [ -n "$pick" ] || { echo "::error::No usable Xcode $MAJOR.x (macOS $host, runtimes: $(echo $rts))"; exit 1; }
+          echo "DEVELOPER_DIR=$pick/Contents/Developer" >> "$GITHUB_ENV"
+          DEVELOPER_DIR="$pick/Contents/Developer" xcodebuild -version
+          command -v pod >/dev/null || brew install cocoapods
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Create test app with the plugin
+        run: |
+          set -euo pipefail
+          npm i -g cordova
+          cordova create app com.theflyy.citest CiTest
+          cd app
+          # FlyyFramework needs iOS 15+; apps must set this too.
+          perl -0pi -e 's|</widget>|    <preference name="deployment-target" value="15.0" />\n</widget>|' config.xml
+          cordova platform add ios
+          cordova plugin add ../plugin
+          cordova prepare ios
+          grep -A1 '^  - FlyyFramework' platforms/ios/Podfile.lock | head -1
+
+      - name: Build (simulator)
+        working-directory: app/platforms/ios
+        run: |
+          ws=$(ls -d *.xcworkspace | head -1)
+          xcodebuild -quiet -workspace "$ws" -scheme "${ws%.xcworkspace}" -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO IPHONEOS_DEPLOYMENT_TARGET=15.0 build
