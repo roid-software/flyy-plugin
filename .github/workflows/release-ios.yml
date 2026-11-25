@@ -1,25 +1,20 @@
 # Release cordova-plugin-theflyy when a new FlyyFramework (Flyy iOS SDK) version is out.
 #
-# Hourly, this checks the public SPM repo roid-software/flyy-ios-spm for a newer version tag than
-# the one pinned in plugin.xml. If there is one (or when run by hand), it:
+# Started by flyy-ios-sdk's release (flyy-release-bot GitHub App) as soon as a new FlyyFramework version
+# is on the public SPM repo roid-software/flyy-ios-spm, or by hand. It:
 #   1. pins FlyyFramework in plugin.xml to the podspec the SDK release uploads next to its
 #      oldest-Xcode zip (pod 'FlyyFramework', :podspec => <cdn url>), so it doesn't need CocoaPods
 #      trunk (read-only from Dec 2, 2026). Versions released before that podspec existed fall back
 #      to the trunk spec (spec="<version>").
 #   2. bumps the patch version (package.json + plugin.xml), publishes to npm, pushes
 #      "Releasing v<new>" + tag <new>.
-# No cross-repo token: flyy-ios-sdk's release publishes the SPM tag, this repo picks it up.
 #
 # npm trusted publishing (OIDC), no token. One-time setup (done):
 #   npm trust github cordova-plugin-theflyy --file release-ios.yml --repo roid-software/flyy-plugin --allow-publish
-# Scheduled releases can be paused with the repo variable AUTO_RELEASE=false. GitHub disables
-# schedules in public repos after 60 days without commits; re-enable it in the Actions tab.
 
 name: Release (iOS SDK update)
 
 on:
-  schedule:
-    - cron: "37 * * * *"
   workflow_dispatch:
     inputs:
       flyy_framework_version:
@@ -40,7 +35,6 @@ permissions:
 
 jobs:
   release:
-    if: ${{ github.event_name != 'schedule' || vars.AUTO_RELEASE != 'false' }}
     # GitHub-hosted on purpose: this repo is public, so npm publishes with provenance, and npm only
     # accepts provenance from GitHub-hosted runners (Blacksmith = "self-hosted" -> E422).
     runs-on: ubuntu-latest
@@ -60,9 +54,11 @@ jobs:
           IOS=${WANT:-$(git ls-remote --tags --refs "https://github.com/$SPM" | sed 's|.*refs/tags/||' |
             grep -E '^[0-9]+(\.[0-9]+)+$' | sort -V | tail -1)}
           [[ "$IOS" =~ ^[0-9]+(\.[0-9]+)+$ ]] || { echo "::error::Bad FlyyFramework version: '$IOS'"; exit 1; }
-          if [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(printf '%s\n' "$IOS" "$CUR" | sort -V | tail -1)" = "$CUR" ]; then
-            echo "FlyyFramework $CUR is the latest; nothing to release"; echo go=false >> "$GITHUB_OUTPUT"; exit 0
+          if [ "$IOS" = "$CUR" ]; then # e.g. the SDK release was re-run
+            echo "FlyyFramework $IOS is already pinned; nothing to release"; echo go=false >> "$GITHUB_OUTPUT"; exit 0
           fi
+          [ "$(printf '%s\n' "$IOS" "$CUR" | sort -V | tail -1)" = "$IOS" ] ||
+            { echo "::error::FlyyFramework $IOS is older than the pinned $CUR"; exit 1; }
           pkg=$(curl -sfL "https://raw.githubusercontent.com/$SPM/$IOS/Package.swift") ||
             { echo "::error::FlyyFramework $IOS is not on SPM (github.com/$SPM)"; exit 1; }
           ZIP=$(echo "$pkg" | sed -nE 's/.*url: "([^"]+)".*/\1/p' | tail -1) # last = oldest-Xcode build
