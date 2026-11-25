@@ -32,8 +32,6 @@
             </feature>
         </config-file>
 
-         <dependency id="cordova-plugin-cocoapod-support"/>
-         <pods-config ios-min-version="15.0" use-frameworks="true"/>
          <header-file src="src/ios/FlyyPlugin.h"/>
          <source-file src="src/ios/FlyyPlugin.m"/>
 
